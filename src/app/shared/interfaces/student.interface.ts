@@ -1,19 +1,20 @@
 export interface StudentInterface {
-    "name": string,
-    "email"?: string,
-    "contact": string,
-    "birthDate"?: string,
-    "address": {
-        "cep": string,
-        "street": string,
-        "number": number,
-        "district": string,
-        "city": string,
-        "state": string,
-        "complement"?: string
+    id: number,
+    name: string,
+    email?: string,
+    contact: string,
+    birthDate?: string,
+    address: {
+        cep: string,
+        street: string,
+        number: number,
+        district: string,
+        city: string,
+        state: string,
+        complement?: string
     },
-    "trainings"?: {
-        "id": number,
-        "concluded": boolean
+    trainings?: {
+        id: number,
+        concluded: boolean
     }[]
 }
