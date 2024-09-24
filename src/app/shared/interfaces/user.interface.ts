@@ -7,7 +7,7 @@ export interface UserInterface {
     "email": string,
     "password": string,
     "plan": string,
-    "students": StudentInterface[],
-    "exercises": ExerciseInterface[],
-    "trainings": TrainingInterface[]
+    "students"?: StudentInterface[],
+    "exercises"?: ExerciseInterface[],
+    "trainings"?: TrainingInterface[]
 }

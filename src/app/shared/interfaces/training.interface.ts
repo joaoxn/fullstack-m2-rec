@@ -5,6 +5,6 @@ export interface TrainingInterface {
     "repetitions": number,
     "weight": number,
     "pauseTime": number,
-    "observations": string,
+    "observations"?: string,
     "weekDay": number
 }
