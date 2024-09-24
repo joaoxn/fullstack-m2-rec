@@ -1,8 +1,8 @@
 export interface StudentInterface {
     "name": string,
-    "email": string,
+    "email"?: string,
     "contact": string,
-    "birthDate": string,
+    "birthDate"?: string,
     "address": {
         "cep": string,
         "street": string,
@@ -10,9 +10,9 @@ export interface StudentInterface {
         "district": string,
         "city": string,
         "state": string,
-        "complement": string
+        "complement"?: string
     },
-    "trainings": {
+    "trainings"?: {
         "id": number,
         "concluded": boolean
     }[]
