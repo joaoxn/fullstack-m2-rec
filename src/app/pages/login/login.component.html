@@ -1,12 +1,30 @@
 <div id="main-wrapper">
-    <form action="" id="login-form">
+    <form (ngSubmit)="submit()" id="login-form" [formGroup]="form">
+        <h2 class="text-center">Login</h2>
         <mat-form-field>
             <mat-label>E-mail</mat-label>
-            <input matInput>
+            <input matInput formControlName="email" required>
+            <mat-icon matSuffix>email</mat-icon>
+
+            @if (form.get('email')?.invalid && form.get('email')?.touched) {
+                <mat-error>{{errorMessage('email')}}</mat-error>
+            }
         </mat-form-field>
         <mat-form-field>
             <mat-label>Senha</mat-label>
-            <input matInput>
+
+            <input matInput type="password" formControlName="password" [type]="hide ? 'password' : 'text'" required>
+
+            <button type="button" mat-icon-button matSuffix (click)="hideSwitch()" [attr.aria-label]="'Hide password'">
+                <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+            </button>
+            @if (form.get('password')?.invalid && form.get('password')?.touched) {
+                <mat-error>Password is required</mat-error>
+            }
         </mat-form-field>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Login</button>
+        <div id="register">
+            <span>Não possui uma conta? </span><a href="">Cadastre-se!</a>
+        </div>
     </form>
 </div>
