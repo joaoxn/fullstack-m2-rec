@@ -1,0 +1,17 @@
+#main-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+#login-form {
+    width: 50vw;
+    height: 50vh;
+
+    display: flex;
+    flex-direction: column;
+    background-color: black;
+    padding: 1rem;
+}
