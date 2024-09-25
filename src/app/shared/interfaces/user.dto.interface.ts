@@ -1,5 +1,4 @@
-export interface UserInterface {
-    id: string,
+export interface UserDtoInterface {
     name: string,
     email: string,
     password: string,

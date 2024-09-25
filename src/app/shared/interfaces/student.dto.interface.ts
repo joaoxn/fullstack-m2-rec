@@ -1,5 +1,4 @@
-export interface StudentInterface {
-    id: string,
+export interface StudentDtoInterface {
     name: string,
     email?: string,
     contact: string,
