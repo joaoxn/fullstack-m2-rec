@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { StudentInterface } from '../interfaces/student.interface';
 import { UserService } from './user.service';
 import { StudentDtoInterface } from '../interfaces/student.dto.interface';

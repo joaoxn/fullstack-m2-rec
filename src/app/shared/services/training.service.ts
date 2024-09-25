@@ -1,6 +1,5 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { Observable } from 'rxjs';
 import { TrainingInterface } from '../interfaces/training.interface';
 import { UserService } from './user.service';
 import { TrainingDtoInterface } from '../interfaces/training.dto.interface';

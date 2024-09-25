@@ -1,8 +1,6 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserInterface } from '../interfaces/user.interface';
-import { Observable } from 'rxjs';
-import { StudentInterface } from '../interfaces/student.interface';
 import { UserDtoInterface } from '../interfaces/user.dto.interface';
 
 @Injectable({
@@ -32,7 +30,7 @@ export class UserService {
     return user;
   }
 
-  create(user: UserDtoInterface): UserInterface | undefined {
+  add(user: UserDtoInterface): UserInterface | undefined {
     let response: UserInterface | undefined;
     this.httpClient.post<UserInterface>(this.url, user).subscribe(data => response = data);
     return response;
