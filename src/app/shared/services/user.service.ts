@@ -2,32 +2,102 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserInterface } from '../interfaces/user.interface';
 import { Observable } from 'rxjs';
+import { StudentInterface } from '../interfaces/student.interface';
+import { UserDtoInterface } from '../interfaces/user.dto.interface';
 
 @Injectable({
   providedIn: 'root'
 })
 export class UserService {
-  url = 'http://localhost:3000/user';
+  url = 'http://localhost:3000/users';
 
   constructor(private httpClient: HttpClient) { }
 
-  getAll(): Observable<UserInterface[]> {
-    return this.httpClient.get<UserInterface[]>(this.url);
+  getAll(): UserInterface[] | undefined {
+    let response: UserInterface[] | undefined;
+    this.httpClient.get<UserInterface[]>(this.url).subscribe(data => response = data);
+    return response;
   }
 
-  get(id: string): Observable<UserInterface> {
-    return this.httpClient.get<UserInterface>(`${this.url}/${id}`);
+  get(id: string): UserInterface | undefined {
+    let response: UserInterface | undefined;
+    this.httpClient.get<UserInterface>(`${this.url}/${id}`).subscribe(data => response = data);
+    return response;
   }
 
-  create(user: UserInterface): Observable<Object> {
-    return this.httpClient.post(this.url, user);
+  getByEmail(email: string, password?: string): UserInterface | [UserInterface, boolean] | undefined {
+    let user: UserInterface | undefined = this.getAll()?.find(u => u.email === email);
+    if (user && password)
+      return [user, user.password === password];
+    return user;
   }
 
-  update(id: number, user: UserInterface): Observable<Object> {
-    return this.httpClient.put(`${this.url}/${id}`, user);
+  create(user: UserDtoInterface): UserInterface | undefined {
+    let response: UserInterface | undefined;
+    this.httpClient.post<UserInterface>(this.url, user).subscribe(data => response = data);
+    return response;
   }
 
-  delete(id: number): Observable<Object> {
-    return this.httpClient.delete(`${this.url}/${id}`);
+  update(id: string, user: UserDtoInterface): UserInterface | undefined {
+    let response: UserInterface | undefined;
+    this.httpClient.put<UserInterface>(`${this.url}/${id}`, user)
+    .subscribe(data => response = data);
+    return response;
+  }
+
+  delete(id: string): UserInterface | undefined {
+    let response: UserInterface | undefined;
+    this.httpClient.delete<UserInterface>(`${this.url}/${id}`).subscribe(data => response = data);
+    return response;
+  }
+  
+  registerStudent(userId: string, studentId: string): boolean {
+    let user = this.get(userId);
+
+    if (user) {
+      user.studentsId.push(studentId.toString());
+      this.update(userId, user);
+    }
+    return Boolean(user);
+  }
+
+  registerTraining(userId: string, trainingId: string): boolean {
+    let user = this.get(userId);
+
+    if (user) {
+      user.trainingsId.push(trainingId.toString());
+      this.update(userId, user);
+    }
+    return Boolean(user);
+  }
+
+  unregisterStudent(userId: string, studentId: string): boolean {
+    let user = this.get(userId);
+
+    if (!user) {
+      return false;
+    }
+    let index = user.studentsId.indexOf(studentId.toString());
+    if (index === -1) {
+      return false;
+    }
+    user.studentsId = user.studentsId.splice(index, 1);
+    this.update(userId, user);
+    return true;
+  }
+  
+  unregisterTraining(userId: string, trainingId: string): boolean {
+    let user = this.get(userId);
+
+    if (!user) {
+      return false;
+    }
+    let index = user.trainingsId.indexOf(trainingId.toString());
+    if (index === -1) {
+      return false;
+    }
+    user.trainingsId = user.trainingsId.splice(index, 1);
+    this.update(userId, user);
+    return true;
   }
 }
