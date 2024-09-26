@@ -46,17 +46,23 @@ export class LoginComponent implements OnInit {
     this.hide = !this.hide;
   }
 
-  loginFailed = false;
+  globalErrorMessage = "";
   submit() {
+    this.globalErrorMessage = "";
     this.userService.login(this.form.get('email')!.value, this.form.get('password')!.value)
-      .subscribe(isSuccess => {
-        if (!isSuccess) {
-          this.loginFailed = true;
-          // alert('E-mail e/ou senha inválidos!');
-          return;
+      .subscribe({
+        next: isSuccess => {
+          if (!isSuccess) {
+            this.globalErrorMessage = "*E-mail ou Senha inválidos";
+            return;
+          }
+          alert('Login bem sucedido!');
+          // TODO: Navigate to home page or any other desired route
+        },
+        error: error => {
+          console.error(error);
+          this.globalErrorMessage = "Erro ao tentar efetuar login! Tente novamente mais tarde...";
         }
-        alert('Login bem sucedido!');
-        // TODO: Navigate to home page or any other desired route
       });
   }
 }

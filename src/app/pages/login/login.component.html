@@ -2,8 +2,8 @@
     <div id="brand">FitManage Tech</div>
     <form (ngSubmit)="submit()" id="login-form" [formGroup]="form">
         <h2 class="text-center">Login</h2>
-        @if (loginFailed) {
-            <mat-error>*E-mail ou Senha inválidos</mat-error>
+        @if (globalErrorMessage) {
+            <mat-error id="global-error" class="text-center">{{globalErrorMessage}}</mat-error>
         }
         <mat-form-field>
             <mat-label>E-mail</mat-label>
