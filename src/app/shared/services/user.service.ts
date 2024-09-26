@@ -2,7 +2,9 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { UserInterface } from '../interfaces/user.interface';
 import { UserDtoInterface } from '../interfaces/user.dto.interface';
-import { catchError, map, Observable, of } from 'rxjs';
+import { catchError, map, Observable, of, switchMap } from 'rxjs';
+import { error } from 'console';
+import { verify } from 'crypto';
 
 @Injectable({
   providedIn: 'root'
@@ -12,23 +14,23 @@ export class UserService {
 
   constructor(private httpClient: HttpClient) { }
 
-  getAll(): Observable<UserInterface[] | HttpErrorResponse> {
+  getAll(): Observable<UserInterface[]> {
     return this.httpClient.get<UserInterface[]>(this.url)
       .pipe(catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
-        return of(error);
+        throw error;
       }));
   }
 
-  get(id: string): Observable<UserInterface | HttpErrorResponse> {
+  get(id: string): Observable<UserInterface> {
     return this.httpClient.get<UserInterface>(`${this.url}/${id}`)
       .pipe(catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
-        return of(error);
+        throw error;
       }));
   }
 
-  getByEmail(email: string): Observable<UserInterface | HttpErrorResponse | undefined> {
+  getByEmail(email: string): Observable<UserInterface | undefined> {
     return this.httpClient.get<UserInterface[]>(`${this.url}?email=${email}`).pipe(
       map(users => {
         if (users.length > 1)
@@ -37,107 +39,95 @@ export class UserService {
       }),
       catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
-        return of(error);
+        throw error;
       })
     );
   }
 
-  add(user: UserDtoInterface): Observable<UserInterface | HttpErrorResponse> {
+  add(user: UserDtoInterface): Observable<UserInterface> {
     return this.httpClient.post<UserInterface>(this.url, user)
-    .pipe(catchError((error: HttpErrorResponse) => {
-      console.error("Http Error:", error.message);
-      return of(error);
-    }));
+      .pipe(catchError((error: HttpErrorResponse) => {
+        console.error("Http Error:", error.message);
+        throw error;
+      }));
   }
 
-  update(id: string, user: UserDtoInterface): Observable<UserInterface | HttpErrorResponse> {
+  update(id: string, user: UserDtoInterface): Observable<UserInterface> {
     return this.httpClient.put<UserInterface>(`${this.url}/${id}`, user)
-    .pipe(catchError((error: HttpErrorResponse) => {
-      console.error("Http Error:", error.message);
-      return of(error);
-    }));
+      .pipe(catchError((error: HttpErrorResponse) => {
+        console.error("Http Error:", error.message);
+        throw error;
+      }));
   }
 
-  delete(id: string): Observable<UserInterface | HttpErrorResponse> {
+  delete(id: string): Observable<UserInterface> {
     return this.httpClient.delete<UserInterface>(`${this.url}/${id}`)
-    .pipe(catchError((error: HttpErrorResponse) => {
-      console.error("Http Error:", error.message);
-      return of(error);
-    }));
+      .pipe(catchError((error: HttpErrorResponse) => {
+        console.error("Http Error:", error.message);
+        throw error;
+      }));
   }
 
-  registerStudent(userId: string, studentId: string): Observable<boolean> {
+  registerStudent(userId: string, studentId: string): Observable<UserInterface> {
     return this.get(userId).pipe(
       map(user => {
-        if (user instanceof HttpErrorResponse) return false;
-
         user.studentsId.push(studentId.toString());
-        this.update(userId, user).subscribe();
-        return true;
-      }));
+        return user;
+      }),
+      switchMap(user => this.update(userId, user)));
   }
 
-  registerTraining(userId: string, trainingId: string): Observable<boolean> {
+  registerTraining(userId: string, trainingId: string): Observable<UserInterface> {
     return this.get(userId).pipe(
       map(user => {
-        if (user instanceof HttpErrorResponse) return false;
-
         user.trainingsId.push(trainingId.toString());
-        this.update(userId, user).subscribe();
-        return true;
-      }));
+        return user;
+      }),
+      switchMap(user => this.update(userId, user)));
   }
 
-  unregisterStudent(userId: string, studentId: string): Observable<boolean> {
+  unregisterStudent(userId: string, studentId: string): Observable<UserInterface | undefined> {
     return this.get(userId).pipe(
       map(user => {
-        if (user instanceof HttpErrorResponse) return false;
         let index = user.studentsId.indexOf(studentId.toString());
-        if (index === -1)
-          return false;
+        if (index != -1) return undefined;
 
         user.studentsId = user.studentsId.splice(index, 1);
-        this.update(userId, user).subscribe();
-        return true;
+        return user;
       }),
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 404)
-          console.error("Http Error:", error.message);
-        return of(false);
+      switchMap(user => {
+        if (user) this.update(userId, user).pipe(map(() => user));
+        return of(user);
       })
     );
   }
 
-  unregisterTraining(userId: string, trainingId: string): Observable<boolean> {
+  unregisterTraining(userId: string, trainingId: string): Observable<UserInterface | undefined> {
     return this.get(userId).pipe(
-      map((user) => {
-        if (user instanceof HttpErrorResponse) return false;
+      map(user => {
         let index = user.trainingsId.indexOf(trainingId.toString());
-        if (index === -1)
-          return false;
+        if (index != -1) return undefined;
 
         user.trainingsId = user.trainingsId.splice(index, 1);
-        this.update(userId, user).subscribe();
-        return true;
+        return user;
       }),
-      catchError((error: HttpErrorResponse) => {
-        if (error.status === 404)
-          console.error("Http Error:", error.message);
-        return of(false);
+      switchMap(user => {
+        if (user) this.update(userId, user).pipe(map(() => user));
+        return of(user);
       })
     );
   }
 
-  login(email: string, password: string): Observable<boolean> {
+  login(email: string, password: string): Observable<string | false> {
     return this.getByEmail(email).pipe(
       map(user => {
-        if (user instanceof HttpErrorResponse || !user) {
+        if (!user) {
           console.warn("Login unauthorized.", "Returned:", user);
           return false;
         }
-
+        
         if (user.password != password) {
-          console.warn("Login verification unauthorized. Password does not match (received: "+password+")");
+          console.warn("Login verification unauthorized. Password does not match (received: " + password + ")");
           return false;
         }
 
@@ -147,11 +137,11 @@ export class UserService {
         }));
 
         console.info(`Logged-in with id ${user.id} successfully`);
-        return true;
+        return user.id;
       }));
   }
 
-  validateAuth(): number | false {
+  validateAuth(): string | false {
     const loginUser = localStorage.getItem('loginUser');
     if (!loginUser) return false;
 
