@@ -30,10 +30,10 @@ export class LoginComponent implements OnInit {
       case 'email':
         if (this.form.get('email')?.touched) {
           if (this.form.get('email')?.hasError('required')) {
-            return 'Email is required'
+            return 'E-mail é obrigatório'
           }
           else if (this.form.get('email')?.hasError('email')) {
-            return 'Invalid email format'
+            return 'Formato de e-mail inválido'
           }
         }
     }
@@ -45,14 +45,18 @@ export class LoginComponent implements OnInit {
     this.hide = !this.hide;
   }
 
+  loginFailed = false;
   submit() {
-    // TODO: Integrate with userService login method when created
-    // const success = this.userService.login(this.form.get('email')!.value, this.form.get('password')!.value);
-    // if (!success) {
-      alert('E-mail ou senha inválidos!');
-      // TODO: Show error message in the template
-      return;
-    // }
+    this.userService.login(this.form.get('email')!.value, this.form.get('password')!.value)
+      .subscribe(isSuccess => {
+        if (!isSuccess) {
+          this.loginFailed = true;
+          // alert('E-mail e/ou senha inválidos!');
+          // TODO: Show error message in the template
+          return;
+        }
+        alert('Login bem sucedido!');
+      });
     // TODO: Navigate to home page or any other desired route
   }
 }

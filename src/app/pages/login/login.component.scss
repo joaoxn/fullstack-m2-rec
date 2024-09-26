@@ -2,12 +2,29 @@
     width: 100vw;
     height: 100vh;
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
+    background-image: url(https://static.vecteezy.com/system/resources/thumbnails/026/781/389/small_2x/gym-interior-background-of-dumbbells-on-rack-in-fitness-and-workout-room-photo.jpg);
+    background-size: cover;
+    // background: linear-gradient(180deg, rgb(221, 240, 251), #9b94d3);
+    position: relative;
+}
+
+#brand {
+    padding: 0.5rem 1rem;
+    border-radius: 0 0 1rem 1rem;
+    background-color: rgb(145, 227, 255);
+    box-shadow: 0 5px 15px -3px rgba(0,0,0,0.75);
+    
+    font-weight: bold;
+
+    position: absolute;
+    top: 0;
 }
 
 #login-form {
-    width: 50vw;
+    min-width: 50vw;
     border-radius: 1rem;
     background-color: rgb(219, 246, 255);
     box-shadow: 0 5px 15px -3px rgba(0,0,0,0.75);

@@ -1,6 +1,10 @@
 <div id="main-wrapper">
+    <div id="brand">FitManage Tech</div>
     <form (ngSubmit)="submit()" id="login-form" [formGroup]="form">
         <h2 class="text-center">Login</h2>
+        @if (loginFailed) {
+            <mat-error>*E-mail ou Senha inválidos</mat-error>
+        }
         <mat-form-field>
             <mat-label>E-mail</mat-label>
             <input matInput formControlName="email" required>
@@ -19,7 +23,7 @@
                 <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
             </button>
             @if (form.get('password')?.invalid && form.get('password')?.touched) {
-                <mat-error>Password is required</mat-error>
+                <mat-error>Senha é obrigatória</mat-error>
             }
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Login</button>
