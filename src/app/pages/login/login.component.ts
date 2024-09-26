@@ -5,11 +5,12 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../../shared/services/user.service';
+import { RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ReactiveFormsModule],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -52,11 +53,10 @@ export class LoginComponent implements OnInit {
         if (!isSuccess) {
           this.loginFailed = true;
           // alert('E-mail e/ou senha inválidos!');
-          // TODO: Show error message in the template
           return;
         }
         alert('Login bem sucedido!');
+        // TODO: Navigate to home page or any other desired route
       });
-    // TODO: Navigate to home page or any other desired route
   }
 }
