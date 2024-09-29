@@ -93,7 +93,6 @@ export class RegisterComponent {
   passwordChange() {
     const password = <FormControl>this.form.get('password');
     const confirmPassword = <FormControl>this.form.get('confirmPassword');
-    console.log("password changed to:", password.value);
 
     confirmPassword.setValidators([Validators.required, Validators.pattern(password.value)]);
     confirmPassword.updateValueAndValidity();
