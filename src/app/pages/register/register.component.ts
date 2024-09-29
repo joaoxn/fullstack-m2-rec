@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { UserService } from '../../shared/services/user.service';
 import { Router, RouterLink } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -116,17 +117,14 @@ export class RegisterComponent {
       studentsId: [],
       trainingsId: []
     }).subscribe({
-      next: isSuccess => {
-        if (!isSuccess) {
-          this.globalErrorMessage = "E-mail já cadastrado. Entre na conta ou cadastre um novo e-mail!";
-          return;
-        }
-        this.router.navigate(['/home']);
-        return;
-      },
-      error: error => {
+      next: userId => this.router.navigate(['/home']),
+      error: (error: Error) => {
         console.error(error);
-        this.globalErrorMessage = "Erro ao cadastrar-se! Tente novamente mais tarde...";
+
+        if (error.message.slice(0, 21) === "DuplicateEntityError:")
+          this.globalErrorMessage = "E-mail já cadastrado. Entre na conta ou cadastre um novo e-mail!";
+        else
+          this.globalErrorMessage = "Erro ao cadastrar-se! Tente novamente mais tarde...";
       }
     });
   }
