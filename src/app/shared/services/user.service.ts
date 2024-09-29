@@ -30,14 +30,14 @@ export class UserService {
       }));
   }
 
-  getByEmail(email: string): Observable<UserInterface | undefined> {
+  getByEmail(email: string): Observable<UserInterface> {
     return this.httpClient.get<UserInterface[]>(`${this.url}?email=${email}`).pipe(
       map(users => {
         if (users.length == 0)
           throw new Error("No user found with email: " + email);
         if (users.length > 1)
           console.warn(`Multiple users found with the same email (${email})`, users);
-        return users[0]; // Returns undefined if the array is empty
+        return users[0];
       }),
       catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
@@ -88,11 +88,11 @@ export class UserService {
       switchMap(user => this.update(userId, user)));
   }
 
-  unregisterStudent(userId: string, studentId: string): Observable<UserInterface | undefined> {
+  unregisterStudent(userId: string, studentId: string): Observable<UserInterface> {
     return this.get(userId).pipe(
       map(user => {
         let index = user.studentsId.indexOf(studentId.toString());
-        if (index != -1) return undefined;
+        if (index != -1) throw new Error("No student with id: "+ studentId);
 
         user.studentsId = user.studentsId.splice(index, 1);
         return user;
@@ -104,11 +104,11 @@ export class UserService {
     );
   }
 
-  unregisterTraining(userId: string, trainingId: string): Observable<UserInterface | undefined> {
+  unregisterTraining(userId: string, trainingId: string): Observable<UserInterface> {
     return this.get(userId).pipe(
       map(user => {
         let index = user.trainingsId.indexOf(trainingId.toString());
-        if (index != -1) return undefined;
+        if (index != -1) throw new Error("No training with id: "+ trainingId);
 
         user.trainingsId = user.trainingsId.splice(index, 1);
         return user;
