@@ -23,11 +23,11 @@
 
         <div class="line-inputs-wrapper">
             <mat-form-field>
-                <mat-label>Email</mat-label>
+                <mat-label>E-mail</mat-label>
                 <input matInput type="email" placeholder="exemplo@dominio.com" formControlName="email" required>
                 <mat-icon matSuffix>email</mat-icon>
                 @if (form.get('email')?.invalid && form.get('email')?.touched) {
-                    <mat-error>{{errorMessage('email', 'Email')}}</mat-error>
+                    <mat-error>{{errorMessage('email', 'E-mail')}}</mat-error>
                 }
             </mat-form-field>
             <mat-form-field>
@@ -67,7 +67,7 @@
 
         
 
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Login</button>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Cadastrar-se</button>
 
         <div id="login">
             <span>Já possui uma conta? </span><a routerLink="/login">Fazer login</a>

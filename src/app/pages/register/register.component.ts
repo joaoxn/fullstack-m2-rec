@@ -6,7 +6,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { UserService } from '../../shared/services/user.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-register',
@@ -18,7 +18,7 @@ import { RouterLink } from '@angular/router';
 export class RegisterComponent {
   form!: FormGroup;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
@@ -28,7 +28,7 @@ export class RegisterComponent {
       password: new FormControl('', [Validators.required, Validators.minLength(8), Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W_]).{8,}$')]),
       confirmPassword: new FormControl('', [Validators.required, Validators.minLength(8)]),
       plan: new FormControl('bronze', Validators.required)
-    })
+    });
   }
 
   errorMessage(inputName: string, inputDisplayName: string): string | undefined {
@@ -56,13 +56,13 @@ export class RegisterComponent {
 
   emailErrorMessage(input = <FormControl>this.form.get('email')): string | undefined {
     if (input.hasError('pattern') || input.hasError('email'))
-      return 'Formato de e-mail inválido'
+      return 'Formato de e-mail inválido';
     return undefined;
   }
 
   nameErrorMessage(input = <FormControl>this.form.get('name')): string | undefined {
     if (input.hasError('pattern'))
-      return 'Tem certeza que digitou seu nome corretamente?'
+      return 'Tem certeza que digitou seu nome corretamente?';
 
     return undefined;
   }
@@ -71,15 +71,15 @@ export class RegisterComponent {
     const value: String = input.value;
     // console.log('Validating password\nInput:', input, '\nValue:', value);
     if (input.hasError('minlength') || input.hasError('maxlength'))
-      return 'Senha deve ter entre 8 e 50 caracteres'
+      return 'Senha deve ter entre 8 e 50 caracteres';
 
     if (input.hasError('pattern')) {
       // Check if string does not contain any lowercase OR if doesn't contain upper case letters
       if (value.match('^(?!.*[a-z]).+$'))
-        return 'Deve conter pelo menos uma letra minúscula'
+        return 'Deve conter pelo menos uma letra minúscula';
 
       if (value.match('^(?!.*[A-Z]).+$'))
-        return 'Deve conter pelo menos uma letra maiúscula'
+        return 'Deve conter pelo menos uma letra maiúscula';
 
       if (value.match('^(?!.*[0-9]).+$'))
         return 'Deve conter pelo menos um número';
@@ -117,12 +117,12 @@ export class RegisterComponent {
       studentsId: [],
       trainingsId: []
     }).subscribe({
-      next: user => {
-        if (!user)
-          return this.globalErrorMessage = "Email já cadastrado. Entre na conta ou cadastre um novo email!"
-
-        alert('Cadastro realizado com sucesso!');
-        // TODO: Navigate to login page or any other desired route
+      next: isSuccess => {
+        if (!isSuccess) {
+          this.globalErrorMessage = "E-mail já cadastrado. Entre na conta ou cadastre um novo e-mail!";
+          return;
+        }
+        this.router.navigate(['/home']);
         return;
       },
       error: error => {

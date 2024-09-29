@@ -5,7 +5,7 @@ import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angula
 import { MatIconModule } from '@angular/material/icon';
 import { MatButtonModule } from '@angular/material/button';
 import { UserService } from '../../shared/services/user.service';
-import { RouterLink } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
@@ -17,27 +17,24 @@ import { RouterLink } from '@angular/router';
 export class LoginComponent implements OnInit {
   form!: FormGroup;
 
-  constructor(private userService: UserService) { }
+  constructor(private userService: UserService, private router: Router) { }
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      email: new FormControl('', [Validators.required, Validators.email]),
+      email: new FormControl('', [Validators.required, Validators.email, Validators.pattern('.+@.+\\..{2,}')]),
       password: new FormControl('', Validators.required)
-    })
+    });
   }
 
-  errorMessage(input: string): string | undefined {
-    switch (input) {
-      case 'email':
-        if (this.form.get('email')?.touched) {
-          if (this.form.get('email')?.hasError('required')) {
-            return 'Email é obrigatório'
-          }
-          else if (this.form.get('email')?.hasError('email')) {
-            return 'Formato de e-mail inválido'
-          }
-        }
-    }
+  emailErrorMessage(input = <FormControl>this.form.get('email')): string | undefined {
+    if (!input.touched) return undefined;
+
+    if (input.hasError('required'))
+      return 'E-mail é obrigatório';
+
+    if (input.hasError('pattern') || input.hasError('email'))
+      return 'Formato de e-mail inválido';
+
     return undefined;
   }
 
@@ -53,13 +50,16 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: isSuccess => {
           if (!isSuccess) {
-            this.globalErrorMessage = "*Email e/ou Senha inválidos!";
+            this.globalErrorMessage = "*E-mail e/ou Senha inválidos!";
             return;
           }
-          alert('Login bem sucedido!');
-          // TODO: Navigate to home page or any other desired route
+          this.router.navigate(['/home']);
         },
-        error: error => {
+        error: (error: Error) => {
+          if (error.message == "No user found with such e-mail") {
+            this.globalErrorMessage = "*E-mail e/ou Senha inválidos!";
+            return;
+          }
           console.error(error);
           this.globalErrorMessage = "Erro ao efetuar login! Tente novamente mais tarde...";
         }

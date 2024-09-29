@@ -34,14 +34,10 @@ export class UserService {
     return this.httpClient.get<UserInterface[]>(`${this.url}?email=${email}`).pipe(
       map(users => {
         if (users.length == 0)
-          throw new Error("No user found with email: " + email);
+          throw new Error("No user found with such email");
         if (users.length > 1)
           console.warn(`Multiple users found with the same email (${email})`, users);
         return users[0];
-      }),
-      catchError((error: HttpErrorResponse) => {
-        console.error("Http Error:", error.message);
-        throw error;
       })
     );
   }
@@ -150,9 +146,9 @@ export class UserService {
   }
 
   logSession(id: string): string {
-    sessionStorage.setItem('loginUser', JSON.stringify({
+    localStorage.setItem('authToken', JSON.stringify({
       userId: id,
-      auth: Date.now() * 1000
+      auth: Date.now() / 1000
     }));
 
     console.info(`Logged-in with id ${id} successfully`);
@@ -160,19 +156,35 @@ export class UserService {
   }
 
   validateAuth(): Observable<string> | false {
-    const loginUser = localStorage.getItem('loginUser');
-    if (!loginUser) return false;
+    const authToken = localStorage.getItem('authToken');
+    const vals = check(authToken);
 
-    const auth = JSON.parse(loginUser).auth;
-    if (!auth) return false;
+    function check(authToken: string | null): [any, string] | false {
+      if (!authToken) return false;
 
-    const userId: string = JSON.parse(loginUser).userId;
-    if (!userId) return false;
+      const auth = JSON.parse(authToken).auth;
+      if (!auth) return false;
+
+      const userId: string = JSON.parse(authToken).userId;
+      if (!userId) return false;
+
+      return [ auth, userId ];
+    }
+
+    if (!vals) {
+      localStorage.removeItem("authToken")
+      return false;
+    }
+
+    const auth = vals[0];
+    const userId = vals[1];
 
     return this.get(userId).pipe(
       map(() => {
-        if (Date.now() * 1000 - auth < 3600) // If auth older than 3600 seconds (1 hour) returns false
+        if (Date.now() / 1000 - auth < 86400) // If auth older than 86400 seconds (24 hours) returns false
           return auth.userId;
+        
+        localStorage.removeItem("authToken");
         console.warn("Authentication expired. Auth: "+ auth);
         throw new Error("Authentication expired. Auth: "+ auth);
       })

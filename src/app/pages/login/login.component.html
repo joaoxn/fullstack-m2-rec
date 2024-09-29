@@ -6,12 +6,12 @@
             <mat-error id="global-error" class="text-center">{{globalErrorMessage}}</mat-error>
         }
         <mat-form-field>
-            <mat-label>Email</mat-label>
+            <mat-label>E-mail</mat-label>
             <input matInput type="email" placeholder="exemplo@dominio.com" formControlName="email" required>
             <mat-icon matSuffix>email</mat-icon>
 
             @if (form.get('email')?.invalid && form.get('email')?.touched) {
-                <mat-error>{{errorMessage('email')}}</mat-error>
+                <mat-error>{{emailErrorMessage()}}</mat-error>
             }
         </mat-form-field>
         <mat-form-field>
