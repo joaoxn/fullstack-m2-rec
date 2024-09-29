@@ -31,7 +31,7 @@ export class LoginComponent implements OnInit {
       case 'email':
         if (this.form.get('email')?.touched) {
           if (this.form.get('email')?.hasError('required')) {
-            return 'E-mail é obrigatório'
+            return 'Email é obrigatório'
           }
           else if (this.form.get('email')?.hasError('email')) {
             return 'Formato de e-mail inválido'
@@ -53,7 +53,7 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: isSuccess => {
           if (!isSuccess) {
-            this.globalErrorMessage = "*E-mail ou Senha inválidos";
+            this.globalErrorMessage = "*Email e/ou Senha inválidos!";
             return;
           }
           alert('Login bem sucedido!');
@@ -61,7 +61,7 @@ export class LoginComponent implements OnInit {
         },
         error: error => {
           console.error(error);
-          this.globalErrorMessage = "Erro ao tentar efetuar login! Tente novamente mais tarde...";
+          this.globalErrorMessage = "Erro ao efetuar login! Tente novamente mais tarde...";
         }
       });
   }

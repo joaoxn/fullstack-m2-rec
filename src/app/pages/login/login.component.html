@@ -6,8 +6,8 @@
             <mat-error id="global-error" class="text-center">{{globalErrorMessage}}</mat-error>
         }
         <mat-form-field>
-            <mat-label>E-mail</mat-label>
-            <input matInput formControlName="email" required>
+            <mat-label>Email</mat-label>
+            <input matInput type="email" placeholder="exemplo@dominio.com" formControlName="email" required>
             <mat-icon matSuffix>email</mat-icon>
 
             @if (form.get('email')?.invalid && form.get('email')?.touched) {
@@ -28,7 +28,7 @@
         </mat-form-field>
         <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Login</button>
         <div id="register">
-            <span>Não possui uma conta? </span><a routerLink="">Cadastre-se!</a>
+            <span>Não possui uma conta? </span><a routerLink="/register">Cadastre-se!</a>
         </div>
     </form>
 </div>
