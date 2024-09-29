@@ -146,7 +146,7 @@ export class UserService {
   }
 
   logSession(id: string): string {
-    localStorage.setItem('loginUser', JSON.stringify({
+    localStorage.setItem('authToken', JSON.stringify({
       userId: id,
       auth: Date.now() / 1000
     }));
@@ -156,23 +156,23 @@ export class UserService {
   }
 
   validateAuth(): Observable<string> | false {
-    const loginUser = localStorage.getItem('loginUser');
-    const vals = check(loginUser);
+    const authToken = localStorage.getItem('authToken');
+    const vals = check(authToken);
 
-    function check(loginUser: string | null): [any, string] | false {
-      if (!loginUser) return false;
+    function check(authToken: string | null): [any, string] | false {
+      if (!authToken) return false;
 
-      const auth = JSON.parse(loginUser).auth;
+      const auth = JSON.parse(authToken).auth;
       if (!auth) return false;
 
-      const userId: string = JSON.parse(loginUser).userId;
+      const userId: string = JSON.parse(authToken).userId;
       if (!userId) return false;
 
       return [ auth, userId ];
     }
 
     if (!vals) {
-      localStorage.removeItem("loginUser")
+      localStorage.removeItem("authToken")
       return false;
     }
 
@@ -184,7 +184,7 @@ export class UserService {
         if (Date.now() / 1000 - auth < 86400) // If auth older than 86400 seconds (24 hours) returns false
           return auth.userId;
         
-        localStorage.removeItem("loginUser");
+        localStorage.removeItem("authToken");
         console.warn("Authentication expired. Auth: "+ auth);
         throw new Error("Authentication expired. Auth: "+ auth);
       })
