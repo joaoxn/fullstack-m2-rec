@@ -107,6 +107,8 @@ export class RegisterComponent {
   globalErrorMessage = "";
   submit() {
     this.globalErrorMessage = "";
+    const defaultUserErrorMessage = "E-mail já cadastrado. Entre ou cadastre um novo e-mail!";
+    const defaultServerErrorMessage = "Erro ao cadastrar-se! Tente novamente mais tarde...";
 
     this.userService.register({
       name: this.form.get('name')!.value,
@@ -119,7 +121,7 @@ export class RegisterComponent {
     }).subscribe({
       next: isSuccess => {
         if (!isSuccess) {
-          this.globalErrorMessage = "E-mail já cadastrado. Entre na conta ou cadastre um novo e-mail!";
+          this.globalErrorMessage = defaultUserErrorMessage;
           return;
         }
         this.router.navigate(['/home']);
@@ -127,7 +129,7 @@ export class RegisterComponent {
       },
       error: error => {
         console.error(error);
-        this.globalErrorMessage = "Erro ao cadastrar-se! Tente novamente mais tarde...";
+        this.globalErrorMessage = defaultServerErrorMessage;
       }
     });
   }

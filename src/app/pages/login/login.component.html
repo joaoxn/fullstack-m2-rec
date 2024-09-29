@@ -26,9 +26,15 @@
                 <mat-error>Senha é obrigatória</mat-error>
             }
         </mat-form-field>
-        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid">Login</button>
-        <div id="register">
-            <span>Não possui uma conta? </span><a routerLink="/register">Cadastre-se!</a>
-        </div>
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || serviceLoading">
+            @if (serviceLoading) {
+                Loading...
+            } @else {
+                Login
+            }
+        </button>
+    <div id="register">
+        <span>Não possui uma conta? </span><a routerLink="/register">Cadastre-se!</a>
+    </div>
     </form>
 </div>
