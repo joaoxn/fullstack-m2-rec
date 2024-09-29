@@ -8,8 +8,9 @@ import { PagesComponent } from './shared/pages/pages/pages.component';
 export const routes: Routes = [
     {path: 'login', component: LoginComponent, canActivate: [authGuard]},
     {path: 'register', component: RegisterComponent, canActivate: [authGuard]},
+    {path: '', redirectTo: 'home', pathMatch: 'full'},
     {path: '', component: PagesComponent, children: [
-    {path: 'home', component: HomeComponent, canActivate: [authGuard]}
+        {path: 'home', component: HomeComponent, canActivate: [authGuard]}
     ]},
     {path: 'dashboard', redirectTo: 'home'},
     {path: '**', redirectTo: 'home'}
