@@ -4,7 +4,7 @@
             "id": "0",
             "name": "admin",
             "email": "admin@example.com",
-            "password": "password123",
+            "password": "Senha123#",
             "plan": "gold",
             "studentsId": [
                 "0",
@@ -21,7 +21,7 @@
             "id": "1",
             "name": "José",
             "email": "jose.fit@fitness.com",
-            "password": "Fitworld42",
+            "password": "Fit_ness42",
             "plan": "bronze",
             "studentsId": [
                 "2"
