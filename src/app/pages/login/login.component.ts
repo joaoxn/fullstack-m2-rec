@@ -51,8 +51,8 @@ export class LoginComponent implements OnInit {
         next: userId => this.router.navigate(['/home']),
         error: (error: Error) => {
           if (
-            error.message.slice(0, 19) == "NoSuchEntityError:" ||
-            error.message.slice(0, 19) == "UnauthorizedError:"
+            error.message.slice(0, 18) == "NoSuchEntityError:" ||
+            error.message.slice(0, 18) == "UnauthorizedError:"
           ) {
             this.globalErrorMessage = "*E-mail e/ou Senha inválidos!";
             return;
