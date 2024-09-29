@@ -161,13 +161,27 @@ export class UserService {
 
   validateAuth(): Observable<string> | false {
     const loginUser = localStorage.getItem('loginUser');
-    if (!loginUser) return false;
+    const vals = check(loginUser);
 
-    const auth = JSON.parse(loginUser).auth;
-    if (!auth) return false;
+    function check(loginUser: string | null): [any, string] | false {
+      if (!loginUser) return false;
 
-    const userId: string = JSON.parse(loginUser).userId;
-    if (!userId) return false;
+      const auth = JSON.parse(loginUser).auth;
+      if (!auth) return false;
+
+      const userId: string = JSON.parse(loginUser).userId;
+      if (!userId) return false;
+
+      return [ auth, userId ];
+    }
+
+    if (!vals) {
+      localStorage.removeItem("loginUser")
+      return false;
+    }
+
+    const auth = vals[0];
+    const userId = vals[1];
 
     return this.get(userId).pipe(
       map(() => {
@@ -175,6 +189,10 @@ export class UserService {
           return auth.userId;
         console.warn("Authentication expired. Auth: "+ auth);
         throw new Error("Authentication expired. Auth: "+ auth);
+      }),
+      catchError(error => {
+        localStorage.removeItem("loginUser")
+        throw error;
       })
     );
   }
