@@ -15,7 +15,7 @@ import { UserService } from '../../services/user.service';
   templateUrl: './pages.component.html',
   styleUrl: './pages.component.scss'
 })
-export class PagesComponent implements AfterViewInit {
+export class PagesComponent implements OnInit, AfterViewInit {
   @ViewChild('header') headerElement!: ElementRef;
   @ViewChild('footer') footerElement!: ElementRef;
   
@@ -23,6 +23,11 @@ export class PagesComponent implements AfterViewInit {
 
   constructor(private userService: UserService, private router: Router, private cdRef: ChangeDetectorRef) { }
   
+  ngOnInit(): void {
+    if (!this.userService.currentUser)
+      this.router.navigate(['/login']);
+  }
+
   ngAfterViewInit(): void {
     const headerHeight = this.headerElement.nativeElement.offsetHeight;
     const footerHeight = this.footerElement.nativeElement.offsetHeight;
