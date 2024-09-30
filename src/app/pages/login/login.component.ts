@@ -1,16 +1,18 @@
 import { Component, OnInit } from '@angular/core';
-import { MatInputModule } from '@angular/material/input';
 import { MatFormFieldModule } from '@angular/material/form-field';
-import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-import { MatIconModule } from '@angular/material/icon';
+import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
+import { MatIconModule } from '@angular/material/icon';
+import { MatProgressSpinnerModule } from '@angular/material/progress-spinner';
+import { MatProgressBarModule } from '@angular/material/progress-bar';
+import { FormControl, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { UserService } from '../../shared/services/user.service';
 import { Router, RouterLink } from '@angular/router';
 
 @Component({
   selector: 'app-login',
   standalone: true,
-  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, ReactiveFormsModule, RouterLink],
+  imports: [MatFormFieldModule, MatInputModule, MatButtonModule, MatIconModule, MatProgressSpinnerModule, MatProgressBarModule, ReactiveFormsModule, RouterLink],
   templateUrl: './login.component.html',
   styleUrl: './login.component.scss'
 })
@@ -43,13 +45,30 @@ export class LoginComponent implements OnInit {
     this.hide = !this.hide;
   }
 
+  serviceLoading = false;
   globalErrorMessage = "";
   submit() {
+    this.serviceLoading = true;
     this.globalErrorMessage = "";
-    this.userService.login(this.form.get('email')!.value, this.form.get('password')!.value)
+    const defaultUserErrorMessage = "*E-mail e/ou senha inválidos!";
+    const defaultServerErrorMessage = "Erro ao efetuar login! Tente novamente mais tarde...";
+
+    const email = this.form.get('email')!.value;
+    const password: string = this.form.get('password')!.value;
+    // Validators.minLength(8), 
+    // Validators.pattern('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W_]).{8,}$')
+    if (password.length < 8 ||
+      !password.match('^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[\\W_]).{8,}$')) {
+      this.globalErrorMessage = defaultUserErrorMessage;
+      this.serviceLoading = false;
+      return;
+    }
+
+    this.userService.login(email, password)
       .subscribe({
         next: userId => this.router.navigate(['/home']),
         error: (error: Error) => {
+          this.serviceLoading = false;
           if (
             error.message.slice(0, 18) == "NoSuchEntityError:" ||
             error.message.slice(0, 18) == "UnauthorizedError:"
@@ -58,7 +77,7 @@ export class LoginComponent implements OnInit {
             return;
           }
           console.error(error);
-          this.globalErrorMessage = "Erro ao efetuar login! Tente novamente mais tarde...";
+          this.globalErrorMessage = defaultServerErrorMessage;
         }
       });
   }
