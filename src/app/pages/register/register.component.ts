@@ -103,8 +103,10 @@ export class RegisterComponent {
     this.hide = !this.hide;
   }
 
+  serviceLoading = false;
   globalErrorMessage = "";
   submit() {
+    this.serviceLoading = true;
     this.globalErrorMessage = "";
     const defaultUserErrorMessage = "E-mail já cadastrado. Entre ou cadastre um novo e-mail!";
     const defaultServerErrorMessage = "Erro ao cadastrar-se! Tente novamente mais tarde...";
@@ -118,12 +120,15 @@ export class RegisterComponent {
       studentsId: [],
       trainingsId: []
     }).subscribe({
-      next: userId => this.router.navigate(['/home']),
+      next: userId => {
+        this.serviceLoading = false;
+        this.router.navigate(['/home']);
+      },
       error: (error: Error) => {
+        this.serviceLoading = false;
         console.error(error);
-
         if (error.message.slice(0, 21) === "DuplicateEntityError:")
-          this.globalErrorMessage = "E-mail já cadastrado. Entre na conta ou cadastre um novo e-mail!";
+          this.globalErrorMessage = defaultUserErrorMessage;
         else
           this.globalErrorMessage = "Erro ao cadastrar-se! Tente novamente mais tarde...";
       }

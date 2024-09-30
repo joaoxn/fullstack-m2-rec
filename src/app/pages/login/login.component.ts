@@ -68,6 +68,7 @@ export class LoginComponent implements OnInit {
       .subscribe({
         next: userId => this.router.navigate(['/home']),
         error: (error: Error) => {
+          this.serviceLoading = false;
           if (
             error.message.slice(0, 18) == "NoSuchEntityError:" ||
             error.message.slice(0, 18) == "UnauthorizedError:"
@@ -77,7 +78,6 @@ export class LoginComponent implements OnInit {
           }
           console.error(error);
           this.globalErrorMessage = defaultServerErrorMessage;
-          this.serviceLoading = false;
         }
       });
   }
