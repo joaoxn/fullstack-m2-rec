@@ -1,6 +1,6 @@
 <div id="main-wrapper">
     @if (user) {
-        <h2 class="text-center">Bem-vindo, {{user.name}}!</h2>
+        <h2 class="text-center">Bem-vindo, {{user.name | name}}!</h2>
         <div id="cards" class="dir-row">
             <mat-card class="card" appearance="outlined">
                 <mat-card-content class="card-content">
