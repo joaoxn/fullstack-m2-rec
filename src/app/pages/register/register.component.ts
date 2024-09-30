@@ -70,7 +70,6 @@ export class RegisterComponent {
 
   passwordErrorMessage(input = <FormControl>this.form.get('password')): string | undefined {
     const value: String = input.value;
-    // console.log('Validating password\nInput:', input, '\nValue:', value);
     if (input.hasError('minlength') || input.hasError('maxlength'))
       return 'Senha deve ter entre 8 e 50 caracteres';
 
