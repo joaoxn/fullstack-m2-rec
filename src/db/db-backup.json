@@ -2,9 +2,9 @@
     "users": [
         {
             "id": "0",
-            "name": "admin",
-            "email": "admin@example.com",
-            "password": "Senha123#",
+            "name": "Admin User",
+            "email": "admin@user.com",
+            "password": "Admin123#",
             "plan": "gold",
             "studentsId": [
                 "0",
@@ -19,7 +19,7 @@
         },
         {
             "id": "1",
-            "name": "José",
+            "name": "José Alexandre da Silva",
             "email": "jose.fit@fitness.com",
             "password": "Fit_ness42",
             "plan": "bronze",
@@ -39,7 +39,7 @@
     "students": [
         {
             "id": "0",
-            "name": "Juan",
+            "name": "Juan Cardoso",
             "email": "juan.lopez@example.com",
             "contact": "47997833550",
             "birthDate": "1990-05-15",
@@ -61,7 +61,7 @@
         },
         {
             "id": "1",
-            "name": "Pedro",
+            "name": "Pedro Moraes",
             "email": "pedro.santos@example.com",
             "contact": "47999988776",
             "birthDate": "1985-03-20",
@@ -78,7 +78,7 @@
         },
         {
             "id": "2",
-            "name": "Maria",
+            "name": "Maria Cecília",
             "email": "maria.silva@example.com",
             "contact": "47998877665",
             "birthDate": "1995-07-10",

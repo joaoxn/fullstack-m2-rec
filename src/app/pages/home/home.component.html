@@ -1,1 +1,46 @@
-<p>home works!</p>
+<div id="main-wrapper">
+    @if (user) {
+        <h2 class="text-center">Bem-vindo, {{user.name | name}}!</h2>
+        <div id="cards" class="dir-row">
+            <mat-card class="card" appearance="outlined">
+                <mat-card-content class="card-content">
+                    <mat-card-title> {{user.studentsId.length}} 
+                        @if (user.studentsId.length == 1) {
+                            Aluno
+                        } @else {
+                            Alunos
+                        }
+                    </mat-card-title>
+                    <mat-card-subtitle> {{user.trainingsId.length}}
+                        @if (user.trainingsId.length == 1) {
+                            Treino
+                        } @else {
+                            Treinos
+                        }
+                    </mat-card-subtitle>
+                    <mat-chip-set>
+                        <button class="card-button" (click)="redirectStudents()" mat-raised-button>Acessar</button>
+                    </mat-chip-set>
+                </mat-card-content>
+                <img mat-card-md-image src="/assets/people.svg">
+            </mat-card>
+    
+            <mat-card class="card dir-row" appearance="outlined">
+                <mat-card-content class="card-content">
+                    <mat-card-title> {{user.exercises.length}} 
+                        @if (user.exercises.length == 1) {
+                            Exercício
+                        } @else {
+                            Exercícios
+                        }
+                    </mat-card-title>
+                    <wbr>
+                    <mat-chip-set>
+                        <button class="card-button" (click)="redirectExercises()" mat-raised-button>Acessar</button>
+                    </mat-chip-set>
+                </mat-card-content>
+                <img mat-card-md-image src="/assets/weight.svg">
+            </mat-card>
+        </div>
+    }
+</div>

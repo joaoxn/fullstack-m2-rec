@@ -66,18 +66,13 @@ export class LoginComponent implements OnInit {
 
     this.userService.login(email, password)
       .subscribe({
-        next: isSuccess => {
-          if (!isSuccess) {
-            this.globalErrorMessage = defaultUserErrorMessage;
-            this.serviceLoading = false;
-            return;
-          }
-          this.router.navigate(['/home']);
-        },
+        next: userId => this.router.navigate(['/home']),
         error: (error: Error) => {
-          if (error.message == "No user found with such e-mail") {
-            this.globalErrorMessage = defaultUserErrorMessage;
-            this.serviceLoading = false;
+          if (
+            error.message.slice(0, 18) == "NoSuchEntityError:" ||
+            error.message.slice(0, 18) == "UnauthorizedError:"
+          ) {
+            this.globalErrorMessage = "*E-mail e/ou Senha inválidos!";
             return;
           }
           console.error(error);

@@ -1,0 +1,19 @@
+<header #header>
+    <mat-toolbar>
+        <span class="semibold">TrainSys</span>
+            <a routerLink="/home">Home</a>
+            <a routerLink="/students">Alunos</a>
+            <a routerLink="/exercises">Exercícios</a>
+            <button id="logout" mat-raised-button (click)="logout()">Sair</button>
+    </mat-toolbar>
+</header>
+<div [style.min-height]="routerOutletMinHeight">
+    <router-outlet></router-outlet>
+</div>
+<footer #footer>
+    <mat-toolbar>
+        <span>TrainSys - Todos os direitos reservados</span>
+        <span>Criado e desenvolvido por: João Victor Olivo</span>
+        <span>Proposto por: LAB365</span>
+    </mat-toolbar>
+</footer>

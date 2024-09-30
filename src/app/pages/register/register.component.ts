@@ -7,6 +7,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatSelectModule } from '@angular/material/select';
 import { UserService } from '../../shared/services/user.service';
 import { Router, RouterLink } from '@angular/router';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-register',
@@ -69,7 +70,6 @@ export class RegisterComponent {
 
   passwordErrorMessage(input = <FormControl>this.form.get('password')): string | undefined {
     const value: String = input.value;
-    // console.log('Validating password\nInput:', input, '\nValue:', value);
     if (input.hasError('minlength') || input.hasError('maxlength'))
       return 'Senha deve ter entre 8 e 50 caracteres';
 
@@ -93,7 +93,6 @@ export class RegisterComponent {
   passwordChange() {
     const password = <FormControl>this.form.get('password');
     const confirmPassword = <FormControl>this.form.get('confirmPassword');
-    console.log("password changed to:", password.value);
 
     confirmPassword.setValidators([Validators.required, Validators.pattern(password.value)]);
     confirmPassword.updateValueAndValidity();
@@ -119,17 +118,14 @@ export class RegisterComponent {
       studentsId: [],
       trainingsId: []
     }).subscribe({
-      next: isSuccess => {
-        if (!isSuccess) {
-          this.globalErrorMessage = defaultUserErrorMessage;
-          return;
-        }
-        this.router.navigate(['/home']);
-        return;
-      },
-      error: error => {
+      next: userId => this.router.navigate(['/home']),
+      error: (error: Error) => {
         console.error(error);
-        this.globalErrorMessage = defaultServerErrorMessage;
+
+        if (error.message.slice(0, 21) === "DuplicateEntityError:")
+          this.globalErrorMessage = "E-mail já cadastrado. Entre na conta ou cadastre um novo e-mail!";
+        else
+          this.globalErrorMessage = "Erro ao cadastrar-se! Tente novamente mais tarde...";
       }
     });
   }
