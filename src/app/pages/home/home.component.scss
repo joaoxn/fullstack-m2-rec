@@ -1,0 +1,25 @@
+#main-wrapper {
+    min-height: 70vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-evenly;
+}
+
+.card {
+    border: 2px solid rgb(159, 194, 255);
+    display: flex;
+    flex-direction: row;
+    
+    & * {
+        margin: 0.5rem;
+    }
+
+    & .card-button {
+        background-color: rgb(195, 217, 255);
+    }
+}
+
+#cards {
+    justify-content: space-evenly;
+    flex-wrap: wrap;
+}

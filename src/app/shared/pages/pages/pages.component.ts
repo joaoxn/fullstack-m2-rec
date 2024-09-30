@@ -5,6 +5,7 @@ import {MatButtonModule} from '@angular/material/button';
 import {MatToolbarModule} from '@angular/material/toolbar';
 import {MatTabsModule} from '@angular/material/tabs';
 import { NgStyle } from '@angular/common';
+import { UserService } from '../../services/user.service';
 
 
 @Component({
@@ -14,14 +15,19 @@ import { NgStyle } from '@angular/common';
   templateUrl: './pages.component.html',
   styleUrl: './pages.component.scss'
 })
-export class PagesComponent implements AfterViewInit {
+export class PagesComponent implements OnInit, AfterViewInit {
   @ViewChild('header') headerElement!: ElementRef;
   @ViewChild('footer') footerElement!: ElementRef;
   
   routerOutletMinHeight!: string;
 
-  constructor(private router: Router, private cdRef: ChangeDetectorRef) { }
+  constructor(private userService: UserService, private router: Router, private cdRef: ChangeDetectorRef) { }
   
+  ngOnInit(): void {
+    if (!this.userService.currentUser)
+      this.router.navigate(['/login']);
+  }
+
   ngAfterViewInit(): void {
     const headerHeight = this.headerElement.nativeElement.offsetHeight;
     const footerHeight = this.footerElement.nativeElement.offsetHeight;
@@ -32,7 +38,6 @@ export class PagesComponent implements AfterViewInit {
   }
 
   logout() {
-    localStorage.removeItem('authToken');
-    this.router.navigate(['/login']);
+    this.userService.logout();
   }
 }
