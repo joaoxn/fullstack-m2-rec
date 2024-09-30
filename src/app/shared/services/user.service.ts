@@ -46,6 +46,24 @@ export class UserService {
     );
   }
 
+  // getCurrentUser(): Observable<UserInterface | undefined> {
+  //   const validation = this.validateAuth();
+  //   if (!validation) {
+  //     this.logout();
+  //     return of();
+  //   }
+    
+  //   return validation.pipe(
+  //     map(user => this.currentUser = user),
+  //     catchError(error => {
+  //       console.error(error);
+  //       console.warn("User not authenticated, redirecting to login page");
+  //       this.logout();
+  //       return of();
+  //     })
+  //   );
+  // }
+
   add(user: UserDtoInterface): Observable<UserInterface> {
     return this.httpClient.post<UserInterface>(this.url, user)
       .pipe(catchError((error: HttpErrorResponse) => {
