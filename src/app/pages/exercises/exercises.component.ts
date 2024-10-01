@@ -30,7 +30,6 @@ export class ExercisesComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.currentUser;
-    console.log(this.user);
     if (this.user)
       this.exercises = new MatTableDataSource(this.user.exercises);
   }
