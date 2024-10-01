@@ -11,10 +11,10 @@
         <hr>
         <div id="students" class="dir-row">
             <mat-form-field id="input-field">
-                <mat-label>Nome do aluno</mat-label>
-                <input matInput #input (input)="inputChange(input.value)" (keyup)="search(input.value)" type="text" required>
+                <mat-label>Pesquisar Nome do Aluno</mat-label>
+                <input matInput #input (keyup)="search(input.value)" type="text" required>
+                <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
-            <button mat-flat-button id="submit" (click)="search(input.value)" [disabled]="!validInput">Buscar</button>
         </div>
 
         @if (this.studentsTableData) {

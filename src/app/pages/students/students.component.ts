@@ -26,8 +26,6 @@ export class StudentsComponent implements OnInit {
   @ViewChild('table') studentsTable!: MatTable<StudentInterface>;
 
   displayedColumns = ["position", "value", "actions"];
-  
-  validInput = false;
 
   constructor(private studentService: StudentService, private userService: UserService, private router: Router) { }
 
@@ -36,10 +34,6 @@ export class StudentsComponent implements OnInit {
       this.students = students;
       this.studentsTableData = new MatTableDataSource(this.students);
     });
-  }
-
-  inputChange(value: string) {
-    this.validInput = value.length <= 30;
   }
 
   search(name: string) {
