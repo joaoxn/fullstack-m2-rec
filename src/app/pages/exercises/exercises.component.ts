@@ -52,8 +52,8 @@ export class ExercisesComponent implements OnInit {
 
   update() {
     if (!this.user) return;
-    this.userService.update(this.user.id, this.user)
-    .subscribe(data => console.log(data));
+    this.userService.update(this.user.id, this.user).subscribe();
+    
     if (this.exercises)
       this.exercises.data = this.user.exercises;
   }
