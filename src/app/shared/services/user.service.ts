@@ -169,6 +169,8 @@ export class UserService {
   }
 
   validateAuth(): Observable<UserInterface> | false {
+    if (typeof window === 'undefined') return false;
+
     function directErrorReturnCall(): false {
       localStorage.removeItem('authToken');
       return false;

@@ -1,133 +1,131 @@
 {
   "users": [
-      {
-          "id": "0",
-          "name": "Admin User",
-          "email": "admin@user.com",
-          "password": "Admin123#",
-          "plan": "gold",
-          "studentsId": [
-              "0",
-              "1"
-          ],
-          "exercises": [
-              "pushup"
-          ],
-          "trainingsId": [
-              "0"
-          ]
-      },
-      {
-          "id": "1",
-          "name": "José Alexandre da Silva",
-          "email": "jose.fit@fitness.com",
-          "password": "Fit_ness42",
-          "plan": "bronze",
-          "studentsId": [
-              "2"
-          ],
-          "exercises": [
-              "squats",
-              "burpees"
-          ],
-          "trainingsId": [
-              "1",
-              "2"
-          ]
-      }
+    {
+      "id": "0",
+      "name": "Admin User",
+      "email": "admin@user.com",
+      "password": "Admin123#",
+      "plan": "gold",
+      "studentsId": [
+        "0",
+        "1"
+      ],
+      "exercises": [],
+      "trainingsId": [
+        "0"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "José Alexandre da Silva",
+      "email": "jose.fit@fitness.com",
+      "password": "Fit_ness42",
+      "plan": "bronze",
+      "studentsId": [
+        "2"
+      ],
+      "exercises": [
+        "squats",
+        "burpees"
+      ],
+      "trainingsId": [
+        "1",
+        "2"
+      ]
+    }
   ],
   "students": [
-      {
-          "id": "0",
-          "name": "Juan Cardoso",
-          "email": "juan.lopez@example.com",
-          "contact": "47997833550",
-          "birthDate": "1990-05-15",
-          "address": {
-              "cep": "11234-567",
-              "street": "Rua dos Andradas",
-              "number": 123,
-              "district": "Bairro da Lua",
-              "city": "Cidade do Mundo",
-              "state": "SP",
-              "complement": "Apartamento 101"
-          },
-          "trainings": [
-              {
-                  "trainingId": "0",
-                  "concluded": false
-              }
-          ]
+    {
+      "id": "0",
+      "name": "Juan Cardoso",
+      "email": "juan.lopez@example.com",
+      "contact": "47997833550",
+      "birthDate": "1990-05-15",
+      "address": {
+        "cep": "11234-567",
+        "street": "Rua dos Andradas",
+        "number": 123,
+        "district": "Bairro da Lua",
+        "city": "Cidade do Mundo",
+        "state": "SP",
+        "complement": "Apartamento 101"
       },
-      {
-          "id": "1",
-          "name": "Pedro Moraes",
-          "email": "pedro.santos@example.com",
-          "contact": "47999988776",
-          "birthDate": "1985-03-20",
-          "address": {
-              "cep": "12345-678",
-              "street": "Rua das Rosas",
-              "number": 456,
-              "district": "Bairro do Céu",
-              "city": "Cidade da Esperança",
-              "state": "SP",
-              "complement": "Casa 201"
-          },
-          "trainings": []
+      "trainings": [
+        {
+          "trainingId": "0",
+          "concluded": false
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "name": "Pedro Moraes",
+      "email": "pedro.santos@example.com",
+      "contact": "47999988776",
+      "birthDate": "1985-03-20",
+      "address": {
+        "cep": "12345-678",
+        "street": "Rua das Rosas",
+        "number": 456,
+        "district": "Bairro do Céu",
+        "city": "Cidade da Esperança",
+        "state": "SP",
+        "complement": "Casa 201"
       },
-      {
-          "id": "2",
-          "name": "Maria Cecília",
-          "email": "maria.silva@example.com",
-          "contact": "47998877665",
-          "birthDate": "1995-07-10",
-          "address": {
-              "cep": "12345-678",
-              "street": "Rua das Flores",
-              "number": 789,
-              "district": "Bairro do Vale",
-              "city": "Cidade da Lua",
-              "state": "SP",
-              "complement": "Apartamento 202"
-          },
-          "trainings": [
-              {
-                  "trainingId": "1",
-                  "concluded": true
-              },
-              {
-                  "trainingId": "2",
-                  "concluded": false
-              }
-          ]
-      }
+      "trainings": []
+    },
+    {
+      "id": "2",
+      "name": "Maria Cecília",
+      "email": "maria.silva@example.com",
+      "contact": "47998877665",
+      "birthDate": "1995-07-10",
+      "address": {
+        "cep": "12345-678",
+        "street": "Rua das Flores",
+        "number": 789,
+        "district": "Bairro do Vale",
+        "city": "Cidade da Lua",
+        "state": "SP",
+        "complement": "Apartamento 202"
+      },
+      "trainings": [
+        {
+          "trainingId": "1",
+          "concluded": true
+        },
+        {
+          "trainingId": "2",
+          "concluded": false
+        }
+      ]
+    }
   ],
   "trainings": [
-      {
-          "id": "0",
-          "exercise": "pushup",
-          "repetitions": 10,
-          "weight": 0,
-          "pauseTime": 30,
-          "observations": "",
-          "weekDay": 0
-      },
-      {
-          "id": "1",
-          "exercise": "squats",
-          "repetitions": 10,
-          "weight": 150,
-          "pauseTime": 15,
-          "observations": ""
-      },
-      {
-          "id": "2",
-          "exercise": "burpees",
-          "repetitions": 8,
-          "weight": 0,
-          "pauseTime": 30,
-          "observations": ""
-      }
+    {
+      "id": "0",
+      "exercise": "pushup",
+      "repetitions": 10,
+      "weight": 0,
+      "pauseTime": 30,
+      "observations": "",
+      "weekDay": 0
+    },
+    {
+      "id": "1",
+      "exercise": "squats",
+      "repetitions": 10,
+      "weight": 150,
+      "pauseTime": 15,
+      "observations": ""
+    },
+    {
+      "id": "2",
+      "exercise": "burpees",
+      "repetitions": 8,
+      "weight": 0,
+      "pauseTime": 30,
+      "observations": ""
+    }
   ]
 }
