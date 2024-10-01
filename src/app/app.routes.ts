@@ -11,10 +11,10 @@ export const routes: Routes = [
     {path: 'login', component: LoginComponent, canActivate: [authGuard]},
     {path: 'register', component: RegisterComponent, canActivate: [authGuard]},
     {path: '', redirectTo: 'home', pathMatch: 'full'},
-    {path: '', component: PagesComponent, children: [
-        {path: 'home', component: HomeComponent, canActivate: [authGuard]},
-        {path: 'exercises', component: ExercisesComponent, canActivate: [authGuard]},
-        {path: 'students', component: StudentsComponent, canActivate: [authGuard]}
+    {path: '', component: PagesComponent, canActivate: [authGuard], children: [
+        {path: 'home', component: HomeComponent},
+        {path: 'exercises', component: ExercisesComponent},
+        {path: 'students', component: StudentsComponent}
     ]},
     {path: 'dashboard', redirectTo: 'home'},
     {path: '**', redirectTo: 'home'}

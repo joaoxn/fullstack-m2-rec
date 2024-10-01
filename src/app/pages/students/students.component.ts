@@ -39,7 +39,7 @@ export class StudentsComponent implements OnInit {
   }
 
   inputChange(value: string) {
-    this.validInput = value.length <= 50;
+    this.validInput = value.length <= 30;
   }
 
   search(name: string) {
