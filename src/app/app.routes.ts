@@ -6,6 +6,7 @@ import { authGuard } from './shared/guards/auth.guard';
 import { PagesComponent } from './shared/pages/pages/pages.component';
 import { ExercisesComponent } from './pages/exercises/exercises.component';
 import { StudentsComponent } from './pages/students/students.component';
+import { StudentInfoComponent } from './pages/student-info/student-info.component';
 
 export const routes: Routes = [
     {path: 'login', component: LoginComponent, canActivate: [authGuard]},
@@ -14,7 +15,8 @@ export const routes: Routes = [
     {path: '', component: PagesComponent, canActivate: [authGuard], children: [
         {path: 'home', component: HomeComponent},
         {path: 'exercises', component: ExercisesComponent},
-        {path: 'students', component: StudentsComponent}
+        {path: 'students', component: StudentsComponent},
+        {path: 'students/:id', component: StudentInfoComponent}
     ]},
     {path: 'dashboard', redirectTo: 'home'},
     {path: '**', redirectTo: 'home'}

@@ -35,7 +35,7 @@ export class ExercisesComponent implements OnInit {
   }
 
   inputChange(value: string) {
-    this.validInput = value.length >= 3 && value.length <= 30;
+    this.validInput = value.length >= 3 && value.length <= 80;
   }
 
   add(value: string) {

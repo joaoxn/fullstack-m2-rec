@@ -55,11 +55,11 @@ export class StudentsComponent implements OnInit {
   }
 
   treinos(student: StudentInterface) {
-    this.router.navigate([`/${student.id}/trainings`, { relativeTo: this.router.url }]);
+    this.router.navigate(['students', student.id, 'trainings']);
   }
 
   ver(student: StudentInterface) {
-    this.router.navigate([`/${student.id}/view`, { relativeTo: this.router.url }]);
+    this.router.navigate(['students', student.id]);
   }
 
   redirectHome() {
