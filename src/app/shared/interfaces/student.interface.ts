@@ -7,7 +7,7 @@ export interface StudentInterface {
     address: {
         cep: string,
         street: string,
-        number: number,
+        number: number | undefined,
         district: string,
         city: string,
         state: string,

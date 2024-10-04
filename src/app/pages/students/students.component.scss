@@ -7,7 +7,7 @@
     width: calc(100% - 176px);
 }
 
-#exercises {
+#students {
     padding: 1rem;
     padding-left: 20%;
     padding-right: 20%;
@@ -18,15 +18,22 @@
     align-items: center;
     justify-content: center;
     padding-left: 1rem;
-    padding-right: 1rem;
+    padding-right: 7rem;
+    position: relative;
 
     & > * {
         margin: 0;
     }
-    
+
     & > .icon {
         height: 5rem;
         margin-right: 1rem;
+    }
+
+    & > #new {
+        position: absolute;
+        right: 1rem;
+        background-color: rgb(204, 23, 71);
     }
 }
 
@@ -35,11 +42,8 @@
 }
 
 #input-field {
-    flex: 10;
-    margin-right: 2rem;
+    flex: 1;
 }
-
-
 
 #submit {
     flex: 1;
@@ -47,10 +51,17 @@
     margin-bottom: 1rem;
 }
 
-#exercises-table {
+#students-table {
     margin-bottom: 2rem;
 }
 
+.buttons {
+    width: 16rem;
+}
+
+.md-column {
+    width: 15rem;
+}
 
 .sm-column {
     width: 5rem;

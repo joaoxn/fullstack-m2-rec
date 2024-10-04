@@ -3,23 +3,25 @@ import { Injectable } from '@angular/core';
 import { StudentInterface } from '../interfaces/student.interface';
 import { UserService } from './user.service';
 import { StudentDtoInterface } from '../interfaces/student.dto.interface';
-import { catchError, map, Observable, of, switchMap } from 'rxjs';
+import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
 export class StudentService {
-  userId: string = "";
   url = `http://localhost:3000/students`;
 
   constructor(private httpClient: HttpClient, private userService: UserService) { }
 
   getAll(): Observable<StudentInterface[]> {
-    return this.httpClient.get<StudentInterface[]>(this.url)
-      .pipe(catchError((error: HttpErrorResponse) => {
-        console.error("Http Error:", error.message);
-        throw error;
-      }));
+    const observables: Observable<StudentInterface>[] = [];
+
+    this.userService.currentUser?.studentsId.forEach(studentId => {
+      console.log(`searching student of id ${studentId}`);
+      observables.push(this.httpClient.get<StudentInterface>(`${this.url}/${studentId}`));
+    })
+
+    return forkJoin(observables);
   }
 
   get(id: string): Observable<StudentInterface> {
@@ -33,8 +35,11 @@ export class StudentService {
   add(student: StudentDtoInterface): Observable<StudentInterface> {
     return this.httpClient.post<StudentInterface>(this.url, student).pipe(
       switchMap(student => {
-        this.userService.registerStudent(this.userId, student.id);
-        return of(student);
+        if (this.userService.currentUser)
+          return this.userService
+            .registerStudent(this.userService.currentUser.id, student.id)
+            .pipe(map(() => student));
+        throw new Error(`currentUser is not defined`);
       }), catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
@@ -52,8 +57,10 @@ export class StudentService {
   delete(id: string): Observable<StudentInterface> {
     return this.httpClient.delete<StudentInterface>(`${this.url}/${id}`).pipe(
       switchMap(student => {
-        this.userService.unregisterStudent(this.userId, id);
-        return of(student);
+        if (this.userService.currentUser)
+          return this.userService.unregisterStudent(this.userService.currentUser.id, id)
+            .pipe(map(() => student));
+        throw new Error(`currentUser is not defined`);
       }), catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
