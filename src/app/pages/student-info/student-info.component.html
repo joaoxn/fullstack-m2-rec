@@ -1,16 +1,18 @@
 <div id="main-wrapper">
-    <button id="back-btn" (click)="redirectHome()" mat-fab aria-label="Example icon button with a delete icon">
+    <button id="back-btn" routerLink="/students" mat-fab aria-label="Example icon button with a delete icon">
         <mat-icon>arrow_back</mat-icon>
     </button>
     <main id="main-section">
         <div id="title">
             <img class="icon" src="/assets/people.svg">
-            @if (student) {
-            <h1>{{ student.name }}</h1>
-            } @else {
-            <h1>Novo Aluno</h1>
-            }
-            <button mat-flat-button id="submit" type="submit" color="success-red" [disabled]="form.invalid">
+            <h2>
+                @if (student) {
+                    {{ student.name }}
+                } @else {
+                    Novo Aluno
+                }
+            </h2>
+            <button mat-flat-button (click)="submit()" id="submit" type="submit" color="success-red" [disabled]="form.invalid || !form.dirty">
                 @if (student) {
                 Salvar
                 } @else {
@@ -19,7 +21,7 @@
             </button>
         </div>
         <hr>
-        <form (ngSubmit)="save()" id="login-form" [formGroup]="form">
+        <form id="login-form" [formGroup]="form">
             @if (globalErrorMessage) {
             <mat-error id="global-error" class="text-center">{{globalErrorMessage}}</mat-error>
             }
@@ -62,35 +64,21 @@
             </div>
 
             <hr>
-
+            
             <div class="line-inputs-wrapper">
+                @if (cepLoading) {
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                }
                 <mat-form-field>
                     <mat-label>CEP</mat-label>
-                    <input matInput type="tel" formControlName="cep" mask="00000-000" required>
+                    <input matInput type="text" (change)="updateCep()" formControlName="cep" mask="00000-000" required>
                     <mat-icon matSuffix>pin_drop</mat-icon>
-                    @if (form.get('cep')?.invalid && form.get('cep')?.touched) {
-                    <mat-error>Telefone é obrigatório</mat-error>
+                    @if (form.get('cep')?.hasError('required') && form.get('cep')?.touched) {
+                        <mat-error>CEP é obrigatório</mat-error>
+                    } @else if (form.get('cep')?.touched) {
+                        <mat-error>CEP inválido!</mat-error>
                     }
                 </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Cidade</mat-label>
-                    <input matInput type="text" formControlName="city">
-                    <mat-icon matSuffix>location_city</mat-icon>
-                    @if (form.get('date')?.invalid && form.get('date')?.touched) {
-                    <mat-error>Data inválida</mat-error>
-                    }
-                </mat-form-field>
-                <mat-form-field>
-                    <mat-label>Estado</mat-label>
-                    <input matInput type="text" formControlName="state" required>
-                    <mat-icon matSuffix>my_location</mat-icon>
-                    @if (form.get('state')?.invalid && form.get('state')?.touched) {
-                    <mat-error>Estado é obrigatório</mat-error>
-                    }
-                </mat-form-field>
-            </div>
-
-            <div class="line-inputs-wrapper">
                 <mat-form-field>
                     <mat-label>Logradouro</mat-label>
                     <input matInput type="text" formControlName="street" required>
@@ -99,6 +87,27 @@
                     <mat-error>Logradouro é obrigatório</mat-error>
                     }
                 </mat-form-field>
+            </div>
+
+            <div class="line-inputs-wrapper">
+                <mat-form-field>
+                    <mat-label>Bairro</mat-label>
+                    <input matInput type="text" formControlName="district">
+                    <mat-icon matSuffix>location_city</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Cidade</mat-label>
+                    <input matInput type="text" formControlName="city">
+                    <mat-icon matSuffix>location_city</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Estado</mat-label>
+                    <input matInput type="text" formControlName="state" required>
+                    <mat-icon matSuffix>my_location</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="line-inputs-wrapper">
                 <mat-form-field>
                     <mat-label>Número da Casa</mat-label>
                     <input matInput type="number" formControlName="number" required>
