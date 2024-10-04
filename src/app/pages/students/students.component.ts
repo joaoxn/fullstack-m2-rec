@@ -2,7 +2,7 @@ import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { UserInterface } from '../../shared/interfaces/user.interface';
 import { UserService } from '../../shared/services/user.service';
@@ -16,7 +16,7 @@ import { StudentService } from '../../shared/services/student.service';
 @Component({
   selector: 'app-students',
   standalone: true,
-  imports: [MatIconModule, MatInputModule, MatButtonModule, MatTableModule],
+  imports: [RouterLink, MatIconModule, MatInputModule, MatButtonModule, MatTableModule],
   templateUrl: './students.component.html',
   styleUrl: './students.component.scss'
 })
