@@ -35,8 +35,10 @@ export class StudentService {
     return this.httpClient.post<StudentInterface>(this.url, student).pipe(
       switchMap(student => {
         if (this.userService.currentUser)
-        this.userService.registerStudent(this.userService.currentUser.id, student.id);
-        return of(student);
+          return this.userService
+            .registerStudent(this.userService.currentUser.id, student.id)
+            .pipe(map(() => student));
+        throw new Error(`currentUser is not defined`);
       }), catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
@@ -55,7 +57,7 @@ export class StudentService {
     return this.httpClient.delete<StudentInterface>(`${this.url}/${id}`).pipe(
       switchMap(student => {
         if (this.userService.currentUser)
-        this.userService.unregisterStudent(this.userService.currentUser.id, id);
+          this.userService.unregisterStudent(this.userService.currentUser.id, id);
         return of(student);
       }), catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);

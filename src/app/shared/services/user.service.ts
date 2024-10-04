@@ -74,6 +74,7 @@ export class UserService {
     return this.get(userId).pipe(
       map(user => {
         user.studentsId.push(studentId.toString());
+        this.currentUser = user;
         return user;
       }),
       switchMap(user => this.update(userId, user)));
@@ -83,6 +84,7 @@ export class UserService {
     return this.get(userId).pipe(
       map(user => {
         user.trainingsId.push(trainingId.toString());
+        this.currentUser = user;
         return user;
       }),
       switchMap(user => this.update(userId, user)));
@@ -95,6 +97,7 @@ export class UserService {
         if (index != -1) throw new Error("NoSuchEntityError: No student with id: " + studentId);
 
         user.studentsId = user.studentsId.splice(index, 1);
+        this.currentUser = user;
         return user;
       }),
       switchMap(user => {
@@ -111,6 +114,7 @@ export class UserService {
         if (index != -1) throw new Error("NoSuchEntityError: No training with id: " + trainingId);
 
         user.trainingsId = user.trainingsId.splice(index, 1);
+        this.currentUser = user;
         return user;
       }),
       switchMap(user => {
