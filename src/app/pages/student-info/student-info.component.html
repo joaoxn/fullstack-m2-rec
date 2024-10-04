@@ -27,11 +27,13 @@
             }
             <div class="line-inputs-wrapper">
                 <mat-form-field>
-                    <mat-label>Nome</mat-label>
+                    <mat-label>Nome Completo</mat-label>
                     <input matInput type="text" formControlName="name" required>
                     <mat-icon matSuffix>person</mat-icon>
-                    @if (form.get('name')?.invalid && form.get('name')?.touched) {
-                    <mat-error>Nome é obrigatório</mat-error>
+                    @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+                        <mat-error>Nome é obrigatório</mat-error>
+                    } @else if (form.get('name')?.touched) {
+                        <mat-error>Tem certeza que digitou o nome corretamente?</mat-error>
                     }
                 </mat-form-field>
                 <mat-form-field>

@@ -38,7 +38,8 @@ export class StudentInfoComponent implements OnInit {
 
   ngOnInit(): void {
     this.form = new FormGroup({
-      name: new FormControl('', Validators.required),
+      name: new FormControl('', [Validators.required, 
+        Validators.pattern('^(([a-zA-Z]|[à-üÀ-Ü]){2,} )+([a-zA-Z]|[à-üÀ-Ü]){2,} *$')]),
       email: new FormControl('', this.optionalEmailValidator()),
       contact: new FormControl('', Validators.required),
       birthDate: new FormControl('', this.optionalBirthDateValidator()),
