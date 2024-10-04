@@ -1,3 +1,4 @@
+export type CepResponse = CepSuccessInterface | CepErrorInterface;
 export interface CepSuccessInterface {
     logradouro: string;
     complemento: string;

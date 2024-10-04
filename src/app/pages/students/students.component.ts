@@ -41,12 +41,9 @@ export class StudentsComponent implements OnInit {
 
   getStudents(render = true) {
     this.isLoading = true;
-    console.log('Current User:', this.userService.currentUser);
     
     this.studentService.getAll().subscribe({
       next: students => {
-        console.log('students:', students);
-        
         this.students = students;
         this.studentsTableData = new MatTableDataSource(this.students);
         this.isLoading = false;
@@ -69,12 +66,8 @@ export class StudentsComponent implements OnInit {
     if (!this.students) return;
 
     const searchStudents = this.students.filter(student => {
-      console.log('Current student of search:', student);
-
       return student.name.toLowerCase().includes(name.toLowerCase())
     });
-
-    console.log(searchStudents);
 
     this.update(searchStudents);
   }

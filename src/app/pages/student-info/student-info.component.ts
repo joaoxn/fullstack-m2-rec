@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxMaskDirective } from 'ngx-mask';
 import { HttpClient } from '@angular/common/http';
-import { CepErrorInterface, CepSuccessInterface } from '../../shared/interfaces/cep.interface';
+import { CepResponse } from '../../shared/interfaces/cep.interface';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
@@ -123,11 +123,11 @@ export class StudentInfoComponent implements OnInit {
     cep?.disable();
 
     console.log('called API at endpoint:', `https://${cepApiUrl}${cepValue}/json`)
-    this.httpClient.get<CepSuccessInterface | CepErrorInterface>(`https://${cepApiUrl}${cepValue}/json`).subscribe(data => {
+    this.httpClient.get<CepResponse>(`https://${cepApiUrl}${cepValue}/json`).subscribe(data => {
       this.cepLoading = false;
       cep?.enable();
       if ('erro' in data) {
-        console.error('Error with given CEP');
+        console.error('Given CEP does not exist');
         cep.setErrors({requestInvalid: true});
         return;
       }
