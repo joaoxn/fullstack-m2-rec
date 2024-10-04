@@ -1,5 +1,5 @@
 <div id="main-wrapper">
-    <button id="back-btn" (click)="redirectHome()" mat-fab aria-label="Example icon button with a delete icon">
+    <button id="back-btn" routerLink="/home" mat-fab aria-label="Example icon button with a delete icon">
         <mat-icon>arrow_back</mat-icon>
     </button>
     <main id="main-section">
@@ -12,13 +12,22 @@
         <div id="students" class="dir-row">
             <mat-form-field id="input-field">
                 <mat-label>Pesquisar Nome do Aluno</mat-label>
-                <input matInput #input (keyup)="search(input.value)" type="text" required>
+                <input matInput [(ngModel)]="searchValue" (keyup)="search(searchValue)" type="text">
                 <mat-icon matSuffix>search</mat-icon>
             </mat-form-field>
         </div>
 
+        
+        @if (!isLoading && (!studentsTableData || !studentsTableData.data.length)) {
+            <h5 class="text-center">Nenhum Aluno Encontrado!</h5>
+        } 
+        
+        @if (isLoading) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+
         @if (this.studentsTableData) {
-        <table mat-table [dataSource]="studentsTableData" id="students-table" #table class="mat-elevation-z8">
+            <table mat-table [dataSource]="studentsTableData" id="students-table" #table class="mat-elevation-z8">
             <!-- Position Column -->
             <ng-container matColumnDef="position">
                 <th mat-header-cell *matHeaderCellDef class="sm-column">No.</th>
@@ -38,6 +47,9 @@
                     <div class="buttons separate">
                         <button [routerLink]="element.id+'/trainings'" mat-stroked-button color="warn">Treinos</button>
                         <button [routerLink]="element.id" mat-stroked-button>Ver</button>
+                        <button mat-icon-button color="warn" (click)="remove(element.id)" [disabled]="isLoading">
+                            <mat-icon>delete</mat-icon>
+                        </button>
                     </div>
                 </td>
             </ng-container>

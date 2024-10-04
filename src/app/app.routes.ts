@@ -19,6 +19,5 @@ export const routes: Routes = [
         {path: 'students/new', component: StudentInfoComponent},
         {path: 'students/:id', component: StudentInfoComponent}
     ]},
-    {path: 'dashboard', redirectTo: 'home'},
     {path: '**', redirectTo: 'home'}
 ];

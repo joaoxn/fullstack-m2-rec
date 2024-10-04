@@ -73,7 +73,7 @@ export class UserService {
   registerStudent(userId: string, studentId: string): Observable<UserInterface> {
     return this.get(userId).pipe(
       map(user => {
-        user.studentsId.push(studentId.toString());
+        user.studentsId.push(studentId);
         this.currentUser = user;
         return user;
       }),
@@ -83,7 +83,7 @@ export class UserService {
   registerTraining(userId: string, trainingId: string): Observable<UserInterface> {
     return this.get(userId).pipe(
       map(user => {
-        user.trainingsId.push(trainingId.toString());
+        user.trainingsId.push(trainingId);
         this.currentUser = user;
         return user;
       }),
@@ -93,34 +93,28 @@ export class UserService {
   unregisterStudent(userId: string, studentId: string): Observable<UserInterface> {
     return this.get(userId).pipe(
       map(user => {
-        let index = user.studentsId.indexOf(studentId.toString());
-        if (index != -1) throw new Error("NoSuchEntityError: No student with id: " + studentId);
+        let index = user.studentsId.indexOf(studentId);
+        if (index == -1) throw new Error("NoSuchEntityError: No student with id: " + studentId);
 
-        user.studentsId = user.studentsId.splice(index, 1);
+        user.studentsId.splice(index, 1);
         this.currentUser = user;
         return user;
       }),
-      switchMap(user => {
-        if (user) this.update(userId, user).pipe(map(() => user));
-        return of(user);
-      })
+      switchMap(user => this.update(userId, user))
     );
   }
 
   unregisterTraining(userId: string, trainingId: string): Observable<UserInterface> {
     return this.get(userId).pipe(
       map(user => {
-        let index = user.trainingsId.indexOf(trainingId.toString());
-        if (index != -1) throw new Error("NoSuchEntityError: No training with id: " + trainingId);
+        let index = user.trainingsId.indexOf(trainingId);
+        if (index == -1) throw new Error("NoSuchEntityError: No training with id: " + trainingId);
 
-        user.trainingsId = user.trainingsId.splice(index, 1);
+        user.trainingsId.splice(index, 1);
         this.currentUser = user;
         return user;
       }),
-      switchMap(user => {
-        if (user) this.update(userId, user).pipe(map(() => user));
-        return of(user);
-      })
+      switchMap(user => this.update(userId, user))
     );
   }
 
@@ -180,7 +174,7 @@ export class UserService {
       return false;
     }
     this.currentUser = undefined;
-    
+
     const authToken = localStorage.getItem('authToken');
     if (!authToken) return directErrorReturnCall();
 
@@ -197,7 +191,7 @@ export class UserService {
           this.currentUser = user;
           return user;
         }
-        
+
         localStorage.removeItem("authToken");
         this.logout();
         throw new Error("AuthExpiredError: Authentication expired. Auth: " + auth);

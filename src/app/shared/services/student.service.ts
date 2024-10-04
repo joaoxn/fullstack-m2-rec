@@ -17,6 +17,7 @@ export class StudentService {
     const observables: Observable<StudentInterface>[] = [];
 
     this.userService.currentUser?.studentsId.forEach(studentId => {
+      console.log(`searching student of id ${studentId}`);
       observables.push(this.httpClient.get<StudentInterface>(`${this.url}/${studentId}`));
     })
 
@@ -57,8 +58,9 @@ export class StudentService {
     return this.httpClient.delete<StudentInterface>(`${this.url}/${id}`).pipe(
       switchMap(student => {
         if (this.userService.currentUser)
-          this.userService.unregisterStudent(this.userService.currentUser.id, id);
-        return of(student);
+          return this.userService.unregisterStudent(this.userService.currentUser.id, id)
+            .pipe(map(() => student));
+        throw new Error(`currentUser is not defined`);
       }), catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
