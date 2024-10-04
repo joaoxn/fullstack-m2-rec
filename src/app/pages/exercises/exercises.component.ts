@@ -2,7 +2,7 @@ import { Component, OnInit } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
 import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
 import { UserInterface } from '../../shared/interfaces/user.interface';
 import { UserService } from '../../shared/services/user.service';
@@ -14,7 +14,7 @@ import { MatPaginator } from '@angular/material/paginator';
 @Component({
   selector: 'app-exercises',
   standalone: true,
-  imports: [MatIconModule, MatInputModule, MatButtonModule, MatTableModule],
+  imports: [RouterLink, MatIconModule, MatInputModule, MatButtonModule, MatTableModule],
   templateUrl: './exercises.component.html',
   styleUrl: './exercises.component.scss'
 })
@@ -56,9 +56,5 @@ export class ExercisesComponent implements OnInit {
     
     if (this.exercises)
       this.exercises.data = this.user.exercises;
-  }
-
-  redirectHome() {
-    this.router.navigate(['/home']);
   }
 }

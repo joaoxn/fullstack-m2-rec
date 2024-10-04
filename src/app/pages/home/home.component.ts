@@ -7,13 +7,13 @@ import {MatCardModule} from '@angular/material/card';
 import {MatChipsModule} from '@angular/material/chips';
 import {MatButtonModule} from '@angular/material/button';
 import {MatIconModule} from '@angular/material/icon';
-import { Router } from '@angular/router';
+import { Router, RouterLink } from '@angular/router';
 import { NamePipe } from '../../shared/pipes/name.pipe';
 
 @Component({
   selector: 'app-home',
   standalone: true,
-  imports: [MatCardModule, MatChipsModule, MatProgressBarModule, MatButtonModule, MatIconModule, NamePipe],
+  imports: [RouterLink, MatCardModule, MatChipsModule, MatProgressBarModule, MatButtonModule, MatIconModule, NamePipe],
   templateUrl: './home.component.html',
   styleUrl: './home.component.scss'
 })
@@ -24,13 +24,5 @@ export class HomeComponent implements OnInit {
 
   ngOnInit(): void {
     this.user = this.userService.currentUser;
-  }
-
-  redirectStudents() {
-    this.router.navigate(['/students']);
-  }
-
-  redirectExercises() {
-    this.router.navigate(['/exercises']);
   }
 }
