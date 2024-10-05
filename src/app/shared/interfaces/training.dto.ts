@@ -1,5 +1,4 @@
-export interface TrainingInterface {
-    id: string,
+export interface TrainingDto {
     exercise: string,
     repetitions: number,
     weight: number,

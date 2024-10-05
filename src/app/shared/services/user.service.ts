@@ -1,7 +1,7 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { UserInterface } from '../interfaces/user.interface';
-import { UserDtoInterface } from '../interfaces/user.dto.interface';
+import { User } from '../interfaces/user';
+import { UserDto } from '../interfaces/user.dto';
 import { catchError, finalize, map, Observable, of, switchMap, throwError } from 'rxjs';
 import { error } from 'console';
 import { verify } from 'crypto';
@@ -13,29 +13,29 @@ import { Router } from '@angular/router';
 export class UserService {
   readonly url = 'http://localhost:3000/users';
 
-  currentUser?: UserInterface;
+  currentUser?: User;
   lastSuccessVerifyTimestamp = 0;
 
   constructor(private httpClient: HttpClient, private router: Router) { }
 
-  getAll(): Observable<UserInterface[]> {
-    return this.httpClient.get<UserInterface[]>(this.url)
+  getAll(): Observable<User[]> {
+    return this.httpClient.get<User[]>(this.url)
       .pipe(catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
       }));
   }
 
-  get(id: string): Observable<UserInterface> {
-    return this.httpClient.get<UserInterface>(`${this.url}/${id}`)
+  get(id: string): Observable<User> {
+    return this.httpClient.get<User>(`${this.url}/${id}`)
       .pipe(catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
       }));
   }
 
-  getByEmail(email: string): Observable<UserInterface> {
-    return this.httpClient.get<UserInterface[]>(`${this.url}?email=${email}`).pipe(
+  getByEmail(email: string): Observable<User> {
+    return this.httpClient.get<User[]>(`${this.url}?email=${email}`).pipe(
       map(users => {
         if (users.length == 0)
           throw new Error("NoSuchEntityError: No user found with such email");
@@ -46,31 +46,31 @@ export class UserService {
     );
   }
 
-  add(user: UserDtoInterface): Observable<UserInterface> {
-    return this.httpClient.post<UserInterface>(this.url, user)
+  add(user: UserDto): Observable<User> {
+    return this.httpClient.post<User>(this.url, user)
       .pipe(catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
       }));
   }
 
-  update(id: string, user: UserDtoInterface): Observable<UserInterface> {
-    return this.httpClient.put<UserInterface>(`${this.url}/${id}`, user)
+  update(id: string, user: UserDto): Observable<User> {
+    return this.httpClient.put<User>(`${this.url}/${id}`, user)
       .pipe(catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
       }));
   }
 
-  delete(id: string): Observable<UserInterface> {
-    return this.httpClient.delete<UserInterface>(`${this.url}/${id}`)
+  delete(id: string): Observable<User> {
+    return this.httpClient.delete<User>(`${this.url}/${id}`)
       .pipe(catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
       }));
   }
 
-  registerStudent(userId: string, studentId: string): Observable<UserInterface> {
+  registerStudent(userId: string, studentId: string): Observable<User> {
     return this.get(userId).pipe(
       map(user => {
         user.studentsId.push(studentId);
@@ -80,7 +80,7 @@ export class UserService {
       switchMap(user => this.update(userId, user)));
   }
 
-  registerTraining(userId: string, trainingId: string): Observable<UserInterface> {
+  registerTraining(userId: string, trainingId: string): Observable<User> {
     return this.get(userId).pipe(
       map(user => {
         user.trainingsId.push(trainingId);
@@ -90,7 +90,7 @@ export class UserService {
       switchMap(user => this.update(userId, user)));
   }
 
-  unregisterStudent(userId: string, studentId: string): Observable<UserInterface> {
+  unregisterStudent(userId: string, studentId: string): Observable<User> {
     return this.get(userId).pipe(
       map(user => {
         let index = user.studentsId.indexOf(studentId);
@@ -104,7 +104,7 @@ export class UserService {
     );
   }
 
-  unregisterTraining(userId: string, trainingId: string): Observable<UserInterface> {
+  unregisterTraining(userId: string, trainingId: string): Observable<User> {
     return this.get(userId).pipe(
       map(user => {
         let index = user.trainingsId.indexOf(trainingId);
@@ -118,7 +118,7 @@ export class UserService {
     );
   }
 
-  register(user: UserDtoInterface): Observable<string> {
+  register(user: UserDto): Observable<string> {
     return this.getByEmail(user.email).pipe(
       switchMap(() =>
         throwError(() => new Error("DuplicateEntityError: Email already registered"))
@@ -166,7 +166,7 @@ export class UserService {
     return id;
   }
 
-  validateAuth(): Observable<UserInterface> | false {
+  validateAuth(): Observable<User> | false {
     if (typeof window === 'undefined') return false;
 
     function directErrorReturnCall(): false {

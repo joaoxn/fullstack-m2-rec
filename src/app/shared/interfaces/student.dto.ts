@@ -1,5 +1,4 @@
-export interface StudentInterface {
-    id: string,
+export interface StudentDto {
     name: string,
     email?: string,
     contact: string,
@@ -7,7 +6,7 @@ export interface StudentInterface {
     address: {
         cep: string,
         street: string,
-        number: number | undefined,
+        number: number,
         district: string,
         city: string,
         state: string,
