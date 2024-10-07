@@ -1,19 +1,14 @@
-import { Component, input, OnInit, ViewChild } from '@angular/core';
+import { Component, OnInit, ViewChild } from '@angular/core';
 import { MatIconModule } from '@angular/material/icon';
-import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
-import { UserInterface } from '../../shared/interfaces/user.interface';
 import { UserService } from '../../shared/services/user.service';
 import { MatTable, MatTableDataSource, MatTableModule } from '@angular/material/table';
-import { CollectionViewer, DataSource } from '@angular/cdk/collections';
-import { Observable, ReplaySubject } from 'rxjs';
-import { MatPaginator } from '@angular/material/paginator';
-import { StudentInterface } from '../../shared/interfaces/student.interface';
+import { Student } from '../../shared/interfaces/student';
 import { StudentService } from '../../shared/services/student.service';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
-import { FormsModule, NgModel } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-students',
@@ -23,9 +18,9 @@ import { FormsModule, NgModel } from '@angular/forms';
   styleUrl: './students.component.scss'
 })
 export class StudentsComponent implements OnInit {
-  students?: StudentInterface[];
-  studentsTableData?: MatTableDataSource<StudentInterface>;
-  @ViewChild('table') studentsTable!: MatTable<StudentInterface>;
+  students?: Student[];
+  studentsTableData?: MatTableDataSource<Student>;
+  @ViewChild('table') studentsTable!: MatTable<Student>;
 
   searchValue!: string;
 
@@ -72,7 +67,7 @@ export class StudentsComponent implements OnInit {
     this.update(searchStudents);
   }
 
-  update(students: StudentInterface[]) {
+  update(students: Student[]) {
     if (!this.studentsTableData) return;
 
     this.studentsTableData.data = students;

@@ -1,9 +1,10 @@
 import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
-import { StudentInterface } from '../interfaces/student.interface';
+import { Student } from '../interfaces/student';
 import { UserService } from './user.service';
-import { StudentDtoInterface } from '../interfaces/student.dto.interface';
-import { catchError, forkJoin, map, Observable, of, switchMap } from 'rxjs';
+import { StudentDto } from '../interfaces/student.dto';
+import { catchError, forkJoin, map, Observable, of, switchMap, tap } from 'rxjs';
+import { StudentTrainingDto, TrainingDto } from '../interfaces/training.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -13,27 +14,34 @@ export class StudentService {
 
   constructor(private httpClient: HttpClient, private userService: UserService) { }
 
-  getAll(): Observable<StudentInterface[]> {
-    const observables: Observable<StudentInterface>[] = [];
+  getAll(): Observable<Student[]> {
+    const observables: Observable<Student>[] = [];
 
     this.userService.currentUser?.studentsId.forEach(studentId => {
       console.log(`searching student of id ${studentId}`);
-      observables.push(this.httpClient.get<StudentInterface>(`${this.url}/${studentId}`));
-    })
+      observables.push(
+        this.httpClient.get<Student>(`${this.url}/${studentId}`).pipe(
+          tap(() => console.log(`GET API at: ${this.url}/${studentId}`))
+        )
+      );
+    });
 
     return forkJoin(observables);
   }
 
-  get(id: string): Observable<StudentInterface> {
-    return this.httpClient.get<StudentInterface>(`${this.url}/${id}`)
-      .pipe(catchError((error: HttpErrorResponse) => {
+  get(id: string): Observable<Student> {
+    return this.httpClient.get<Student>(`${this.url}/${id}`).pipe(
+      tap(() => console.log(`GET API at: ${this.url}/${id}`)),
+      catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
-      }));
+      })
+    );
   }
 
-  add(student: StudentDtoInterface): Observable<StudentInterface> {
-    return this.httpClient.post<StudentInterface>(this.url, student).pipe(
+  add(student: StudentDto): Observable<Student> {
+    return this.httpClient.post<Student>(this.url, student).pipe(
+      tap(() => console.log(`POST API at: ${this.url} with Body:`, student)),
       switchMap(student => {
         if (this.userService.currentUser)
           return this.userService
@@ -43,19 +51,23 @@ export class StudentService {
       }), catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
-      }))
+      })
+    );
   }
 
-  update(id: string, student: StudentDtoInterface): Observable<StudentInterface> {
-    return this.httpClient.put<StudentInterface>(`${this.url}/${id}`, student)
-      .pipe(catchError((error: HttpErrorResponse) => {
+  update(id: string, student: StudentDto): Observable<Student> {
+    return this.httpClient.put<Student>(`${this.url}/${id}`, student).pipe(
+      tap(() => console.log(`PUT API at: ${this.url}/${id} with Body:`, student)),
+      catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
-      }));
+      })
+    );
   }
 
-  delete(id: string): Observable<StudentInterface> {
-    return this.httpClient.delete<StudentInterface>(`${this.url}/${id}`).pipe(
+  delete(id: string): Observable<Student> {
+    return this.httpClient.delete<Student>(`${this.url}/${id}`).pipe(
+      tap(() => console.log(`DELETE API at: ${this.url}/${id}`)),
       switchMap(student => {
         if (this.userService.currentUser)
           return this.userService.unregisterStudent(this.userService.currentUser.id, id)
@@ -64,6 +76,74 @@ export class StudentService {
       }), catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
-      }));
+      })
+    );
+  }
+
+  registerTraining(id: string, trainingDto: StudentTrainingDto): Observable<Student> {
+    return this.get(id).pipe(
+      map(student => {
+        student.trainings?.push(trainingDto);
+        return student;
+      }),
+      switchMap(student => this.update(id, student))
+    );
+  }
+
+  updateTrainings(id: string, trainingsDto: StudentTrainingDto[]) {
+    return this.get(id).pipe(
+      map(student => {
+
+        student.trainings = student.trainings?.map(training => {
+          const newTraining = trainingsDto
+            .find(searchTraining => searchTraining.trainingId === training.trainingId);
+          return newTraining || training;
+        });
+
+        return student;
+      }),
+      switchMap(student => this.update(id, student))
+    )
+  }
+
+  unregisterTraining(id: string, trainingId: string): Observable<Student> {
+    return this.get(id).pipe(
+      map(student => {
+        let index = -1;
+
+        student.trainings?.forEach((student, i) => {
+          if (student.trainingId === trainingId)
+            index = i;
+        });
+
+        if (index === -1) throw new Error("NoSuchEntityError: No training with id: " + trainingId);
+
+        student.trainings.splice(index, 1);
+        return student;
+      }),
+      switchMap(student => this.update(id, student))
+    );
+  }
+
+
+
+  unregisterAllOfTraining(trainingId: string): Observable<Student[]> {
+    return this.getAll().pipe(
+      map(students => {
+        const changedStudents: Student[] = [];
+        students.forEach(student => {
+          const index = student.trainings.findIndex(training => training.trainingId === trainingId);
+          if (index === -1) return;
+          student.trainings.splice(index, 1);
+          changedStudents.push(student);
+        })
+        return changedStudents;
+      }),
+      switchMap(students => {
+        const observables: Observable<Student>[] = [];
+        students.forEach(student => observables.push(this.update(student.id, student)));
+        return forkJoin(observables);
+      })
+    );
   }
 }

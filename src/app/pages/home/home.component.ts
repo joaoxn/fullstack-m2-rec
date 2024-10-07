@@ -1,5 +1,5 @@
 import { Component, OnInit } from '@angular/core';
-import { UserInterface } from '../../shared/interfaces/user.interface';
+import { User } from '../../shared/interfaces/user';
 import { UserService } from '../../shared/services/user.service';
 
 import {MatProgressBarModule} from '@angular/material/progress-bar';
@@ -18,7 +18,7 @@ import { NamePipe } from '../../shared/pipes/name.pipe';
   styleUrl: './home.component.scss'
 })
 export class HomeComponent implements OnInit {
-  user?: UserInterface;
+  user?: User;
 
   constructor(private userService: UserService, private router: Router) { }
 

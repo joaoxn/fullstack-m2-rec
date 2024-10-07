@@ -49,7 +49,6 @@
     margin-bottom: 2rem;
 }
 
-
 .sm-column {
     width: 5rem;
 }
@@ -63,18 +62,6 @@
 .separate {
     display: flex;
     justify-content: space-between;
-}
-
-.line-inputs-wrapper {
-    @extend .dir-row;
-    @extend .separate;
-
-    flex-wrap: wrap;
-    gap: 1rem;
-
-    &>mat-form-field {
-        flex: 1 1 0;
-    }
 }
 
 .mat-success-red:not(:disabled) {

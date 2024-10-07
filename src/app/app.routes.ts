@@ -7,6 +7,8 @@ import { PagesComponent } from './shared/pages/pages/pages.component';
 import { ExercisesComponent } from './pages/exercises/exercises.component';
 import { StudentsComponent } from './pages/students/students.component';
 import { StudentInfoComponent } from './pages/student-info/student-info.component';
+import { TrainingsComponent } from './pages/trainings/trainings.component';
+import { StudentTrainingsComponent } from './pages/student-trainings/student-trainings.component';
 
 export const routes: Routes = [
     {path: 'login', component: LoginComponent, canActivate: [authGuard]},
@@ -17,7 +19,9 @@ export const routes: Routes = [
         {path: 'exercises', component: ExercisesComponent},
         {path: 'students', component: StudentsComponent},
         {path: 'students/new', component: StudentInfoComponent},
-        {path: 'students/:id', component: StudentInfoComponent}
+        {path: 'students/:id', component: StudentInfoComponent},
+        {path: 'students/:id/trainings', component: StudentTrainingsComponent},
+        {path: 'students/:stId/trainings/:trId', component: TrainingsComponent}
     ]},
     {path: '**', redirectTo: 'home'}
 ];

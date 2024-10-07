@@ -4,7 +4,7 @@ import { MatDividerModule } from '@angular/material/divider';
 import { MatButtonModule } from '@angular/material/button';
 import { Router, RouterLink } from '@angular/router';
 import { MatInputModule } from '@angular/material/input';
-import { UserInterface } from '../../shared/interfaces/user.interface';
+import { User } from '../../shared/interfaces/user';
 import { UserService } from '../../shared/services/user.service';
 import { MatTableDataSource, MatTableModule } from '@angular/material/table';
 import { CollectionViewer, DataSource } from '@angular/cdk/collections';
@@ -19,7 +19,7 @@ import { MatPaginator } from '@angular/material/paginator';
   styleUrl: './exercises.component.scss'
 })
 export class ExercisesComponent implements OnInit {
-  user?: UserInterface;
+  user?: User;
   exercises?: MatTableDataSource<string, MatPaginator>;
   displayedColumns = ["position", "value", "remove"];
   

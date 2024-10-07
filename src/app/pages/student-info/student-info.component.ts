@@ -1,5 +1,5 @@
 import { Component, Input, OnInit } from '@angular/core';
-import { StudentInterface } from '../../shared/interfaces/student.interface';
+import { Student } from '../../shared/interfaces/student';
 import { StudentService } from '../../shared/services/student.service';
 import { AbstractControl, FormControl, FormGroup, ReactiveFormsModule, ValidationErrors, ValidatorFn, Validators } from '@angular/forms';
 
@@ -11,7 +11,7 @@ import { MatIconModule } from '@angular/material/icon';
 import { MatCheckboxModule } from '@angular/material/checkbox';
 import { NgxMaskDirective } from 'ngx-mask';
 import { HttpClient } from '@angular/common/http';
-import { CepResponse } from '../../shared/interfaces/cep.interface';
+import { CepResponse } from '../../shared/interfaces/cep';
 import { MatProgressBarModule } from '@angular/material/progress-bar';
 
 @Component({
@@ -24,7 +24,7 @@ import { MatProgressBarModule } from '@angular/material/progress-bar';
 })
 export class StudentInfoComponent implements OnInit {
   studentId?: string;
-  student?: StudentInterface;
+  student?: Student;
   cepLoading = false;
 
   form!: FormGroup;
@@ -159,7 +159,8 @@ export class StudentInfoComponent implements OnInit {
         city: this.form.get('city')?.value,
         state: this.form.get('state')?.value,
         complement: this.form.get('complement')?.value
-      }
+      },
+      trainings: []
     }
 
     if (this.studentId) {

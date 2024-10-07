@@ -1,5 +1,4 @@
-export interface StudentInterface {
-    id: string,
+export interface StudentDto {
     name: string,
     email?: string,
     contact: string,
@@ -13,8 +12,9 @@ export interface StudentInterface {
         state: string,
         complement?: string
     },
-    trainings?: {
+    trainings: {
         trainingId: string,
+        weekDay: number,
         concluded: boolean
     }[]
 }

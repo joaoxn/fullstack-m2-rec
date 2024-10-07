@@ -1,5 +1,5 @@
-export type CepResponse = CepSuccessInterface | CepErrorInterface;
-export interface CepSuccessInterface {
+export type CepResponse = CepSuccess | CepError;
+export interface CepSuccess {
     logradouro: string;
     complemento: string;
     unidade: string;
@@ -9,6 +9,6 @@ export interface CepSuccessInterface {
     regiao: string;
 }
 
-export interface CepErrorInterface {
+export interface CepError {
     erro: boolean;
 }

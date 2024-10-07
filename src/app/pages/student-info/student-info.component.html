@@ -49,7 +49,7 @@
             <div class="line-inputs-wrapper">
                 <mat-form-field>
                     <mat-label>Telefone</mat-label>
-                    <input matInput type="tel" formControlName="contact" mask="(00) 00000-0000" required>
+                    <input matInput type="tel" formControlName="contact" placeholder="(00) 00000-0000" mask="(00) 00000-0000" required>
                     <mat-icon matSuffix>phone</mat-icon>
                     @if (form.get('contact')?.invalid && form.get('contact')?.touched) {
                         <mat-error>Telefone é obrigatório</mat-error>
@@ -73,7 +73,7 @@
                 }
                 <mat-form-field>
                     <mat-label>CEP</mat-label>
-                    <input matInput type="text" (change)="updateCep()" formControlName="cep" mask="00000-000" required>
+                    <input matInput type="text" (change)="updateCep()" formControlName="cep" placeholder="00000-000" mask="00000-000" required>
                     <mat-icon matSuffix>pin_drop</mat-icon>
                     @if (form.get('cep')?.hasError('required') && form.get('cep')?.touched) {
                         <mat-error>CEP é obrigatório</mat-error>
