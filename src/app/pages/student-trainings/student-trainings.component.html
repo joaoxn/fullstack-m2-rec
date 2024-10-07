@@ -6,9 +6,12 @@
         <div id="title">
             <img class="icon" src="/assets/weight.svg">
             @if (student) {
-                <h2>Treinos de {{student.name | name}}</h2>
+            <h2>Treinos de {{student.name | name}}</h2>
             }
             <img class="icon" src="/assets/people.svg">
+            <button mat-flat-button routerLink="/trainings/new" id="new" color="success-red">
+                Novo Treino
+            </button>
         </div>
         <hr>
 
@@ -21,7 +24,7 @@
             track $index) {
             <mat-tab class="trainings-wrapper" [label]="weekday">
                 <div class="trainings-wrapper">
-                @if (trainings[i].length > 0) {
+                    @if (trainings[i].length > 0) {
                     @for (training of trainings[i]; track $index) {
                     <mat-card class="training-card" appearance="outlined">
                         <div class="card">
@@ -31,7 +34,7 @@
                             <mat-card-content>
                                 <p>{{ training.pauseTime }} segundos de pausa</p>
                                 @if (training.observations) {
-                                    <p>Observações: {{ training.observations }}</p>
+                                <p>Observações: {{ training.observations }}</p>
                                 }
                             </mat-card-content>
                             <mat-card-footer class="example-card-footer">
@@ -45,16 +48,17 @@
                             <button mat-icon-button (click)="remove(training.id)" class="delete-btn" color="warn">
                                 <mat-icon>delete</mat-icon>
                             </button>
-                            <button mat-icon-button (click)="edit(training.id)" class="edit-btn" color="primary">
+                            <button mat-icon-button [routerLink]="'/trainings/'+ training.id" class="edit-btn"
+                                color="primary">
                                 <mat-icon>edit</mat-icon>
                             </button>
                         </div>
                     </mat-card>
-                }
-                } @else if (!isLoading) {
+                    }
+                    } @else if (!isLoading) {
                     <h3 class="mrg-top-1">Nenhum treino para {{ weekday }}</h3>
-                }
-            </div>
+                    }
+                </div>
             </mat-tab>
             }
         </mat-tab-group>

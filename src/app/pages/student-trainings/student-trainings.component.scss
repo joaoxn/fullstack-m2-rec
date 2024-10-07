@@ -18,7 +18,7 @@
     align-items: center;
     justify-content: center;
     padding-left: 1rem;
-    padding-right: 1rem;
+    padding-right: 7rem;
     position: relative;
 
     & > * {
@@ -29,6 +29,12 @@
         height: 5rem;
         margin-left: 1rem;
         margin-right: 1rem;
+    }
+
+    & > #new {
+        position: absolute;
+        right: 1rem;
+        background-color: rgb(204, 23, 71);
     }
 }
 
