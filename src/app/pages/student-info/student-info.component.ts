@@ -159,7 +159,8 @@ export class StudentInfoComponent implements OnInit {
         city: this.form.get('city')?.value,
         state: this.form.get('state')?.value,
         complement: this.form.get('complement')?.value
-      }
+      },
+      trainings: []
     }
 
     if (this.studentId) {

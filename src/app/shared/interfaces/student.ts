@@ -13,8 +13,9 @@ export interface Student {
         state: string,
         complement?: string
     },
-    trainings?: {
+    trainings: {
         trainingId: string,
+        weekDay: number,
         concluded: boolean
     }[]
 }

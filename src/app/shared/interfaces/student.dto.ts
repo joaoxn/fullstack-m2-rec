@@ -6,14 +6,15 @@ export interface StudentDto {
     address: {
         cep: string,
         street: string,
-        number: number,
+        number: number | undefined,
         district: string,
         city: string,
         state: string,
         complement?: string
     },
-    trainings?: {
+    trainings: {
         trainingId: string,
+        weekDay: number,
         concluded: boolean
     }[]
 }

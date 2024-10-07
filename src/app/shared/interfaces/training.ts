@@ -5,5 +5,15 @@ export interface Training {
     weight: number,
     pauseTime: number,
     observations?: string,
-    weekDay: number
+    weekDay: number,
+    concluded: boolean
+}
+
+export interface RawTraining {
+    id: string,
+    exercise: string,
+    repetitions: number,
+    weight: number,
+    pauseTime: number,
+    observations?: string
 }

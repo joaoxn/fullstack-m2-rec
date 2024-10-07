@@ -6,3 +6,9 @@ export interface TrainingDto {
     observations?: string,
     weekDay: number
 }
+
+export interface StudentTrainingDto {
+    trainingId: string,
+    weekDay: number,
+    concluded: boolean
+}
