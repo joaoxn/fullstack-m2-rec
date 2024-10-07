@@ -58,16 +58,3 @@
     display: flex;
     justify-content: space-between;
 }
-
-.line-inputs-wrapper {
-    @extend .dir-row;
-    @extend .separate;
-
-    flex-wrap: wrap;
-    column-gap: 1rem;
-    row-gap: 0;
-    
-    &>mat-form-field {
-        flex: 1 0 200px;
-    }
-}

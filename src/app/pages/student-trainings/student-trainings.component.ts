@@ -65,10 +65,6 @@ export class StudentTrainingsComponent {
     })
   }
 
-  edit(trainingId: string) {
-    this.router.navigate(['/trainings', trainingId]);
-  }
-
   remove(trainingId: string) {
     this.rawTrainings = [];
     this.trainings = [[], [], [], [], [], [], []];
