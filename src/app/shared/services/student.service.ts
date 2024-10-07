@@ -90,19 +90,16 @@ export class StudentService {
     );
   }
 
-  updateTraining(id: string, trainingId: string, trainingDto: StudentTrainingDto) {
+  updateTrainings(id: string, trainingsDto: StudentTrainingDto[]) {
     return this.get(id).pipe(
-      map(student=> {
-        let index = -1;
+      map(student => {
 
-        student.trainings?.forEach((student, i) => {
-          if (student.trainingId === trainingId)
-            index = i;
+        student.trainings = student.trainings?.map(training => {
+          const newTraining = trainingsDto
+            .find(searchTraining => searchTraining.trainingId === training.trainingId);
+          return newTraining || training;
         });
 
-        if (index === -1) throw new Error("NoSuchEntityError: No training with id: " + trainingId);
-
-        student.trainings[index] = trainingDto;
         return student;
       }),
       switchMap(student => this.update(id, student))

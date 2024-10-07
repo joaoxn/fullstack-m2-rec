@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { RawTraining, Training } from '../interfaces/training';
 import { UserService } from './user.service';
-import { RawTrainingDto, TrainingDto } from '../interfaces/training.dto';
+import { RawTrainingDto, StudentTrainingDto, TrainingDto } from '../interfaces/training.dto';
 import { catchError, forkJoin, map, Observable, of, switchMap, tap } from 'rxjs';
 import { StudentService } from './student.service';
 import { Student } from '../interfaces/student';
@@ -146,12 +146,12 @@ export class TrainingService {
           weekDay: training.weekDay,
           concluded: training.concluded
         }
-        return this.studentService.updateTraining(studentId, id, studentTraining)
+        return this.studentService.updateTrainings(studentId, [studentTraining])
       })
     )
   }
   
-  delete (id: string): Observable < RawTraining > {
+  delete(id: string): Observable < RawTraining > {
     return this.studentService.unregisterAllOfTraining(id).pipe(
     switchMap(students => {
       
