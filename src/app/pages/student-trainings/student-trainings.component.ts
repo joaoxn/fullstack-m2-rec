@@ -33,6 +33,7 @@ export class StudentTrainingsComponent {
   trainings: Training[][] = [[], [], [], [], [], [], []];
   
   weekDays = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+  displayWeekDaysLabels = this.weekDays;
   todayWeekDay = new Date().getDay();
   isLoading = false;
 
@@ -63,6 +64,10 @@ export class StudentTrainingsComponent {
           if (!trainings) return;
 
           trainings.forEach(training => this.trainings[training.weekDay].push(training));
+          this.displayWeekDaysLabels = this.weekDays.map((day, index) => {
+            const count = this.trainings[index].length;
+            return `${day} (${count})`;
+          });
         },
         complete: () => this.isLoading = false
       })
