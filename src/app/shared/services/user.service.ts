@@ -2,7 +2,7 @@ import { HttpClient, HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { User } from '../interfaces/user';
 import { UserDto } from '../interfaces/user.dto';
-import { catchError, finalize, map, Observable, of, switchMap, throwError } from 'rxjs';
+import { catchError, finalize, map, Observable, of, switchMap, tap, throwError } from 'rxjs';
 import { error } from 'console';
 import { verify } from 'crypto';
 import { Router } from '@angular/router';
@@ -19,23 +19,28 @@ export class UserService {
   constructor(private httpClient: HttpClient, private router: Router) { }
 
   getAll(): Observable<User[]> {
-    return this.httpClient.get<User[]>(this.url)
-      .pipe(catchError((error: HttpErrorResponse) => {
+    return this.httpClient.get<User[]>(this.url).pipe(
+      tap(() => console.log(`GET API at: ${this.url}`)),
+      catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
-      }));
+      })
+    );
   }
 
   get(id: string): Observable<User> {
-    return this.httpClient.get<User>(`${this.url}/${id}`)
-      .pipe(catchError((error: HttpErrorResponse) => {
+    return this.httpClient.get<User>(`${this.url}/${id}`).pipe(
+      tap(() => console.log(`GET API at: ${this.url}/${id}`)),
+      catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
-      }));
+      })
+    );
   }
 
   getByEmail(email: string): Observable<User> {
     return this.httpClient.get<User[]>(`${this.url}?email=${email}`).pipe(
+      tap(() => console.log(`GET API at: ${this.url}?email=${email}`)),
       map(users => {
         if (users.length == 0)
           throw new Error("NoSuchEntityError: No user found with such email");
@@ -47,27 +52,33 @@ export class UserService {
   }
 
   add(user: UserDto): Observable<User> {
-    return this.httpClient.post<User>(this.url, user)
-      .pipe(catchError((error: HttpErrorResponse) => {
+    return this.httpClient.post<User>(this.url, user).pipe(
+      tap(() => console.log(`POST API at: ${this.url}/ with Body:`, user)),
+      catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
-      }));
+      })
+    );
   }
 
   update(id: string, user: UserDto): Observable<User> {
-    return this.httpClient.put<User>(`${this.url}/${id}`, user)
-      .pipe(catchError((error: HttpErrorResponse) => {
+    return this.httpClient.put<User>(`${this.url}/${id}`, user).pipe(
+      tap(() => console.log(`PUT API at: ${this.url}/${id} with Body:`, user)),
+      catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
-      }));
+      })
+    );
   }
 
   delete(id: string): Observable<User> {
-    return this.httpClient.delete<User>(`${this.url}/${id}`)
-      .pipe(catchError((error: HttpErrorResponse) => {
+    return this.httpClient.delete<User>(`${this.url}/${id}`).pipe(
+      tap(() => console.log(`DELETE API at: ${this.url}/${id}`)),
+      catchError((error: HttpErrorResponse) => {
         console.error("Http Error:", error.message);
         throw error;
-      }));
+      })
+    );
   }
 
   registerStudent(userId: string, studentId: string): Observable<User> {
