@@ -15,12 +15,13 @@ import { MatCardModule } from '@angular/material/card';
 import { MatChipsModule } from '@angular/material/chips';
 import { NamePipe } from '../../shared/pipes/name.pipe';
 import { finalize } from 'rxjs';
+import { MatCheckboxModule } from '@angular/material/checkbox';
 
 @Component({
   selector: 'app-student-trainings',
   standalone: true,
   imports: [RouterLink, FormsModule, NamePipe,
-    MatIconModule, MatInputModule, MatButtonModule,
+    MatIconModule, MatInputModule, MatButtonModule, MatCheckboxModule,
     MatTabsModule, MatProgressBarModule, MatCardModule, MatChipsModule],
   templateUrl: './student-trainings.component.html',
   styleUrl: './student-trainings.component.scss'
@@ -30,7 +31,9 @@ export class StudentTrainingsComponent {
   student?: Student;
   rawTrainings: Training[] = [];
   trainings: Training[][] = [[], [], [], [], [], [], []];
-
+  
+  weekDays = ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado'];
+  todayWeekDay = new Date().getDay();
   isLoading = false;
 
   constructor(
@@ -45,6 +48,7 @@ export class StudentTrainingsComponent {
     this.isLoading = true;
     this.studentId = this.activatedRoute.snapshot.params['id'];
     if (!this.studentId) this.router.navigate(['/students']);
+    this.weekDays[this.todayWeekDay] = this.weekDays[this.todayWeekDay] + " (Hoje)";
     this.getTrainings();
   }
 

@@ -19,10 +19,10 @@
         <mat-progress-bar mode="indeterminate"></mat-progress-bar>
         }
 
-        <mat-tab-group [disableRipple]="false">
-            @for (weekday of ['Domingo', 'Segunda', 'Terça', 'Quarta', 'Quinta', 'Sexta', 'Sábado']; let i = $index;
+        <mat-tab-group [selectedIndex]="todayWeekDay" [disableRipple]="false">
+            @for (weekDay of weekDays; let i = $index;
             track $index) {
-            <mat-tab class="trainings-wrapper" [label]="weekday">
+            <mat-tab class="trainings-wrapper" [label]="weekDay">
                 <div class="trainings-wrapper">
                     @if (trainings[i].length > 0) {
                     @for (training of trainings[i]; track $index) {
@@ -56,7 +56,7 @@
                     </mat-card>
                     }
                     } @else if (!isLoading) {
-                    <h3 class="mrg-top-1">Nenhum treino para {{ weekday }}</h3>
+                    <h3 class="mrg-top-1">Nenhum treino para {{ weekDay }}</h3>
                     }
                 </div>
             </mat-tab>
