@@ -21,7 +21,7 @@ export const routes: Routes = [
         {path: 'students/new', component: StudentInfoComponent},
         {path: 'students/:id', component: StudentInfoComponent},
         {path: 'students/:id/trainings', component: StudentTrainingsComponent},
-        {path: 'trainings/:id', component: TrainingsComponent}
+        {path: 'students/:stId/trainings/:trId', component: TrainingsComponent}
     ]},
     {path: '**', redirectTo: 'home'}
 ];

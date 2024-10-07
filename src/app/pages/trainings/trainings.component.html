@@ -1,1 +1,110 @@
-<p>trainings works!</p>
+<div id="main-wrapper">
+    <button id="back-btn" [routerLink]="'/students/'+this.studentId+'/trainings'" mat-fab aria-label="Example icon button with a delete icon">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <main id="main-section">
+        <div id="title">
+            <img class="icon" src="/assets/weight.svg">
+            <h2>
+                @if (training) {
+                Editar Treino
+                } @else {
+                Novo Treino
+                }
+            </h2>
+            <button mat-flat-button (click)="submit()" id="submit" type="submit" color="success-red"
+                [disabled]="form.invalid || !form.dirty || loading">
+                @if (training) {
+                Salvar
+                } @else {
+                Adicionar
+                }
+            </button>
+        </div>
+        @if (loading) {
+            <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+        <hr>
+        <form id="login-form" [formGroup]="form">
+            @if (globalErrorMessage) {
+            <mat-error id="global-error" class="text-center">{{globalErrorMessage}}</mat-error>
+            }
+            @if (noExercisesError) {
+                <mat-error id="global-error" class="text-center">Nenhum exercício cadastrado! <a routerLink="/exercises">Clique aqui</a> para cadastrar um exercício!</mat-error>
+            }
+            <div class="line-inputs-wrapper">
+                <mat-form-field>
+                    <mat-label>Exercício</mat-label>
+                    <mat-select formControlName="exercise">
+                        @for (exercise of exercises; track $index) {
+                            <mat-option [value]="exercise">{{ exercise }}</mat-option>
+                        }
+                    </mat-select>
+                    <mat-icon matSuffix>fitness_center</mat-icon>
+                    @if (form.get('exercise')?.hasError('required') && form.get('exercise')?.touched) {
+                    <mat-error>Exercício é obrigatório</mat-error>
+                    } @else if (form.get('exercise')?.touched) {
+                    <mat-error>Exercício inválido</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field id="weekday-input">
+                    <mat-label>Dia da Semana</mat-label>
+                    <mat-select formControlName="weekDay" panelClass="mat-select-limit-height">
+                        <mat-option [value]="0">Domingo</mat-option>
+                        <mat-option [value]="1">Segunda</mat-option>
+                        <mat-option [value]="2">Terça</mat-option>
+                        <mat-option [value]="3">Quarta</mat-option>
+                        <mat-option [value]="4">Quinta</mat-option>
+                        <mat-option [value]="5">Sexta</mat-option>
+                        <mat-option [value]="6">Sábado</mat-option>
+                    </mat-select>
+                    <mat-icon matSuffix>event</mat-icon>
+                </mat-form-field>
+            </div>
+            
+            <div id="mid-col" class="line-inputs-wrapper">
+                <mat-form-field>
+                    <mat-label>Repetições</mat-label>
+                    <input matInput type="number" formControlName="repetitions">
+                    <mat-icon matSuffix>repeat</mat-icon>
+                    @if (form.get('repetitions')?.invalid && form.get('repetitions')?.touched) {
+                    <mat-error>Repetições é um campo obrigatório</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Peso (kg)</mat-label>
+                    <input matInput type="number" formControlName="weight" required>
+                    <mat-icon matSuffix>fitness_center</mat-icon>
+                    @if (form.get('weight')?.invalid && form.get('weight')?.touched) {
+                    <mat-error>Peso é obrigatório</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Segundos de Pausa</mat-label>
+                    <input matInput type="number" formControlName="pauseTime">
+                    <mat-icon matSuffix>timer</mat-icon>
+                    @if (form.get('pauseTime')?.invalid && form.get('pauseTime')?.touched) {
+                    <mat-error>Segundos de Pausa é obrigatório</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="line-inputs-wrapper">
+                <mat-form-field>
+                    <mat-label>Observações</mat-label>
+                    <input matInput type="text" formControlName="observations">
+                    <mat-icon matSuffix>notes</mat-icon>
+                    @if (form.get('observations')?.invalid && form.get('observations')?.touched) {
+                    <mat-error>Observação inválida</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+        </form>
+
+
+    </main>
+    <section class="right-section">
+
+    </section>
+</div>

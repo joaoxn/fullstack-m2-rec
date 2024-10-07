@@ -4,7 +4,7 @@ import { Student } from '../interfaces/student';
 import { UserService } from './user.service';
 import { StudentDto } from '../interfaces/student.dto';
 import { catchError, forkJoin, map, Observable, of, switchMap, tap } from 'rxjs';
-import { StudentTrainingDto } from '../interfaces/training.dto';
+import { StudentTrainingDto, TrainingDto } from '../interfaces/training.dto';
 
 @Injectable({
   providedIn: 'root'
@@ -80,7 +80,7 @@ export class StudentService {
     );
   }
 
-  registerTraining(id: string, trainingDto: StudentTrainingDto) {
+  registerTraining(id: string, trainingDto: StudentTrainingDto): Observable<Student> {
     return this.get(id).pipe(
       map(student => {
         student.trainings?.push(trainingDto);
@@ -88,6 +88,25 @@ export class StudentService {
       }),
       switchMap(student => this.update(id, student))
     );
+  }
+
+  updateTraining(id: string, trainingId: string, trainingDto: StudentTrainingDto) {
+    return this.get(id).pipe(
+      map(student=> {
+        let index = -1;
+
+        student.trainings?.forEach((student, i) => {
+          if (student.trainingId === trainingId)
+            index = i;
+        });
+
+        if (index === -1) throw new Error("NoSuchEntityError: No training with id: " + trainingId);
+
+        student.trainings[index] = trainingDto;
+        return student;
+      }),
+      switchMap(student => this.update(id, student))
+    )
   }
 
   unregisterTraining(id: string, trainingId: string): Observable<Student> {
