@@ -20,7 +20,7 @@
         }
 
         <mat-tab-group [selectedIndex]="todayWeekDay" [disableRipple]="false">
-            @for (weekDay of weekDays; let i = $index;
+            @for (weekDay of displayWeekDaysLabels; let i = $index;
             track $index) {
             <mat-tab class="trainings-wrapper" [label]="weekDay">
                 <div class="trainings-wrapper">

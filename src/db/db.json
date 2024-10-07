@@ -10,7 +10,9 @@
         "0",
         "1"
       ],
-      "exercises": ["pushup"],
+      "exercises": [
+        "pushup"
+      ],
       "trainingsId": [
         "0"
       ]
@@ -22,7 +24,8 @@
       "password": "Fit_ness42",
       "plan": "bronze",
       "studentsId": [
-        "2"
+        "2",
+        "8c28"
       ],
       "exercises": [
         "squats",
@@ -32,7 +35,9 @@
         "1",
         "2",
         "3",
-        "4"
+        "4",
+        "5dd0",
+        "fc59"
       ]
     }
   ],
@@ -94,11 +99,6 @@
       },
       "trainings": [
         {
-          "trainingId": "1",
-          "weekDay": 0,
-          "concluded": true
-        },
-        {
           "trainingId": "2",
           "weekDay": 1,
           "concluded": false
@@ -111,6 +111,34 @@
         {
           "trainingId": "4",
           "weekDay": 0,
+          "concluded": false
+        },
+        {
+          "trainingId": "5dd0",
+          "weekDay": 6,
+          "concluded": false
+        }
+      ]
+    },
+    {
+      "id": "8c28",
+      "name": "Andréia Rodrigues",
+      "email": "",
+      "contact": "47997833550",
+      "birthDate": "",
+      "address": {
+        "cep": "88134511",
+        "street": "Rua Emanuel Francisco Darella",
+        "number": 691,
+        "district": "Barra do Aririú",
+        "city": "Palhoça",
+        "state": "Santa Catarina",
+        "complement": "Ap. 3"
+      },
+      "trainings": [
+        {
+          "trainingId": "fc59",
+          "weekDay": 4,
           "concluded": false
         }
       ]
@@ -126,12 +154,14 @@
       "observations": ""
     },
     {
-      "id": "1",
-      "exercise": "squats",
-      "repetitions": 10,
-      "weight": 30,
-      "pauseTime": 30,
-      "observations": ""
+      "exercise": "burpees",
+      "repetitions": 10000,
+      "weight": 10000,
+      "pauseTime": 10000,
+      "observations": "Treino Teste: Não Executar",
+      "weekDay": 5,
+      "concluded": false,
+      "id": "1"
     },
     {
       "id": "2",
@@ -156,6 +186,26 @@
       "weight": 0,
       "pauseTime": 10,
       "observations": "Parar se ficar cansado(a)"
+    },
+    {
+      "id": "5dd0",
+      "exercise": "burpees",
+      "repetitions": 81273812346,
+      "weight": 23796324,
+      "pauseTime": 52685326,
+      "observations": "Teste",
+      "weekDay": 6,
+      "concluded": false
+    },
+    {
+      "id": "fc59",
+      "exercise": "squats",
+      "repetitions": 1231746,
+      "weight": 1948623,
+      "pauseTime": 4932764931,
+      "observations": "Testing",
+      "weekDay": 4,
+      "concluded": false
     }
   ]
 }

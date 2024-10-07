@@ -63,18 +63,19 @@ export class TrainingsComponent {
     }
 
     this.trainingId = this.activatedRoute.snapshot.params['trId'];
-    this.studentId = this.activatedRoute.snapshot.params['stId'];
+    this.studentId = this.activatedRoute.snapshot.params['id'];
     if (!this.studentId) {
       this.router.navigate(['/home']);
       return;
     }
 
     if (this.trainingId === 'new') {
-      this.trainingId = undefined
+      this.trainingId = undefined;
     }
 
     if (this.trainingId) {
-      this.trainingService.getFull(this.trainingId, this.studentId).subscribe(training => {
+      this.trainingService.getFull(this.trainingId, this.studentId).subscribe({
+        next: training => {
         this.training = training;
         if (!training) return;
         console.log('Got training:', training)
@@ -89,7 +90,12 @@ export class TrainingsComponent {
           observations: this.training.observations,
           weekDay: this.training.weekDay
         });
-      });
+      },
+      error: error => {
+        console.warn("Could not get specified training. Set as create training mode.", error);
+        this.trainingId = undefined;
+      }
+    });
     }
   }
 
