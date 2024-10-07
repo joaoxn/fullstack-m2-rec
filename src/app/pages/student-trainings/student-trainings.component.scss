@@ -1,0 +1,90 @@
+#main-wrapper {
+    display: flex;
+    padding-top: 1.5rem;
+}
+
+#main-section {
+    width: calc(100% - 176px);
+}
+
+#students {
+    padding: 1rem;
+    padding-left: 20%;
+    padding-right: 20%;
+}
+
+#title {
+    display: flex; 
+    align-items: center;
+    justify-content: center;
+    padding-left: 1rem;
+    padding-right: 1rem;
+    position: relative;
+
+    & > * {
+        margin: 0;
+    }
+
+    & > .icon {
+        height: 5rem;
+        margin-left: 1rem;
+        margin-right: 1rem;
+    }
+}
+
+.trainings-wrapper {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: space-around;
+}
+
+.training-card {
+    max-width: 20rem;
+    width: 100%;
+    margin: 1rem;
+    padding: 0.5rem;
+    text-align: center;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+
+    & > .card {
+        width: 100%;
+        height: 100%;
+        display: flex;
+        flex-direction: column;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    & > .buttons {
+        width: min-content;
+        height: 100%;
+    }
+}
+
+#back-btn {
+    margin: 1rem;
+}
+
+#input-field {
+    flex: 1;
+}
+
+#students-table {
+    margin-bottom: 2rem;
+}
+
+.buttons {
+    width: 16rem;
+}
+
+.md-column {
+    width: 15rem;
+}
+
+.sm-column {
+    width: 5rem;
+}
