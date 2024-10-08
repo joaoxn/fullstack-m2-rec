@@ -1,0 +1,69 @@
+<div id="main-wrapper">
+    <button id="back-btn" routerLink="/students" mat-fab aria-label="Example icon button with a delete icon">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <main id="main-section">
+        <div id="title">
+            <img class="icon" src="/assets/weight.svg">
+            @if (student) {
+            <h2>Treinos de {{student.name | name}}</h2>
+            }
+            <img class="icon" src="/assets/people.svg">
+            <button mat-flat-button routerLink="new" id="new" color="success-red">
+                Novo Treino
+            </button>
+        </div>
+        <hr>
+
+        @if (isLoading) {
+        <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+        }
+
+        <mat-tab-group [selectedIndex]="todayWeekDay" [disableRipple]="false">
+            @for (weekDay of displayWeekDaysLabels; let i = $index;
+            track $index) {
+            <mat-tab class="trainings-wrapper" [label]="weekDay">
+                <div class="trainings-wrapper">
+                    @if (trainings[i].length > 0) {
+                    @for (training of trainings[i]; track $index) {
+                    <mat-card class="training-card" appearance="outlined">
+                        <div class="card">
+                            <mat-card-header>
+                                <mat-card-title>{{ training.exercise }}</mat-card-title>
+                            </mat-card-header>
+                            <mat-card-content>
+                                <p>{{ training.pauseTime }} segundos de pausa</p>
+                                @if (training.observations) {
+                                <p>Observações: {{ training.observations }}</p>
+                                }
+                            </mat-card-content>
+                            <mat-card-footer class="example-card-footer">
+                                <mat-chip-set aria-label="Chihuahua traits">
+                                    <mat-chip>{{ training.weight }} kg</mat-chip>
+                                    <mat-chip>{{ training.repetitions }} Repetições</mat-chip>
+                                </mat-chip-set>
+                            </mat-card-footer>
+                        </div>
+                        <div class="buttons">
+                            <button mat-icon-button (click)="remove(training.id)" class="delete-btn" color="warn">
+                                <mat-icon>delete</mat-icon>
+                            </button>
+                            <button mat-icon-button [routerLink]="training.id" class="edit-btn"
+                                color="primary">
+                                <mat-icon>edit</mat-icon>
+                            </button>
+                        </div>
+                    </mat-card>
+                    }
+                    } @else if (!isLoading) {
+                    <h3 class="mrg-top-1">Nenhum treino para {{ weekDay }}</h3>
+                    }
+                </div>
+            </mat-tab>
+            }
+        </mat-tab-group>
+    </main>
+    <section class="right-section">
+
+    </section>
+</div>

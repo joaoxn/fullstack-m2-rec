@@ -1,0 +1,137 @@
+<div id="main-wrapper">
+    <button id="back-btn" routerLink="/students" mat-fab aria-label="Example icon button with a delete icon">
+        <mat-icon>arrow_back</mat-icon>
+    </button>
+    <main id="main-section">
+        <div id="title">
+            <img class="icon" src="/assets/people.svg">
+            <h2>
+                @if (student) {
+                    {{ student.name }}
+                } @else {
+                    Novo Aluno
+                }
+            </h2>
+            <button mat-flat-button (click)="submit()" id="submit" type="submit" color="success-red" [disabled]="form.invalid || !form.dirty">
+                @if (student) {
+                Salvar
+                } @else {
+                Adicionar
+                }
+            </button>
+        </div>
+        <hr>
+        <form id="login-form" [formGroup]="form">
+            @if (globalErrorMessage) {
+            <mat-error id="global-error" class="text-center">{{globalErrorMessage}}</mat-error>
+            }
+            <div class="line-inputs-wrapper">
+                <mat-form-field>
+                    <mat-label>Nome Completo</mat-label>
+                    <input matInput type="text" formControlName="name" required>
+                    <mat-icon matSuffix>person</mat-icon>
+                    @if (form.get('name')?.hasError('required') && form.get('name')?.touched) {
+                        <mat-error>Nome é obrigatório</mat-error>
+                    } @else if (form.get('name')?.touched) {
+                        <mat-error>Tem certeza que digitou o nome corretamente?</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>E-mail</mat-label>
+                    <input matInput type="email" placeholder="exemplo@dominio.com" formControlName="email">
+                    <mat-icon matSuffix>email</mat-icon>
+                    @if (form.get('email')?.hasError('invalid') && form.get('email')?.touched) {
+                    <mat-error>Formato de e-mail inválido</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="line-inputs-wrapper">
+                <mat-form-field>
+                    <mat-label>Telefone</mat-label>
+                    <input matInput type="tel" formControlName="contact" placeholder="(00) 00000-0000" mask="(00) 00000-0000" required>
+                    <mat-icon matSuffix>phone</mat-icon>
+                    @if (form.get('contact')?.invalid && form.get('contact')?.touched) {
+                        <mat-error>Telefone é obrigatório</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Data de Nascimento</mat-label>
+                    <input matInput type="date" formControlName="birthDate">
+                    <mat-icon matSuffix>event</mat-icon>
+                    @if (form.get('birthDate')?.hasError('invalid') && form.get('birthDate')?.touched) {
+                        <mat-error>Data inválida</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <hr>
+            
+            <div class="line-inputs-wrapper">
+                @if (cepLoading) {
+                    <mat-progress-bar mode="indeterminate"></mat-progress-bar>
+                }
+                <mat-form-field>
+                    <mat-label>CEP</mat-label>
+                    <input matInput type="text" (change)="updateCep()" formControlName="cep" placeholder="00000-000" mask="00000-000" required>
+                    <mat-icon matSuffix>pin_drop</mat-icon>
+                    @if (form.get('cep')?.hasError('required') && form.get('cep')?.touched) {
+                        <mat-error>CEP é obrigatório</mat-error>
+                    } @else if (form.get('cep')?.touched) {
+                        <mat-error>CEP inválido!</mat-error>
+                    }
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Logradouro</mat-label>
+                    <input matInput type="text" formControlName="street" required>
+                    <mat-icon matSuffix>home</mat-icon>
+                    @if (form.get('street')?.invalid && form.get('street')?.touched) {
+                    <mat-error>Logradouro é obrigatório</mat-error>
+                    }
+                </mat-form-field>
+            </div>
+
+            <div class="line-inputs-wrapper">
+                <mat-form-field>
+                    <mat-label>Bairro</mat-label>
+                    <input matInput type="text" formControlName="district">
+                    <mat-icon matSuffix>location_city</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Cidade</mat-label>
+                    <input matInput type="text" formControlName="city">
+                    <mat-icon matSuffix>location_city</mat-icon>
+                </mat-form-field>
+                <mat-form-field>
+                    <mat-label>Estado</mat-label>
+                    <input matInput type="text" formControlName="state" required>
+                    <mat-icon matSuffix>my_location</mat-icon>
+                </mat-form-field>
+            </div>
+
+            <div class="line-inputs-wrapper">
+                <mat-form-field>
+                    <mat-label>Número da Casa</mat-label>
+                    <input matInput type="number" formControlName="number" required>
+                    <mat-icon matSuffix>location_on</mat-icon>
+                    @if (form.get('number')?.invalid && form.get('number')?.touched) {
+                    <mat-error>Número da casa é obrigatório</mat-error>
+                    }
+                </mat-form-field>
+                <mat-checkbox formControlName="noNumber" (change)="houseNumberChange()" class="mrg-top-o5"
+                    color="primary">S/N</mat-checkbox>
+                <mat-form-field>
+                    <mat-label>Complemento</mat-label>
+                    <input matInput type="text" formControlName="complement">
+                    <mat-icon matSuffix>add</mat-icon>
+                </mat-form-field>
+            </div>
+
+        </form>
+
+
+    </main>
+    <section class="right-section">
+
+    </section>
+</div>

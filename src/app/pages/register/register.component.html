@@ -1,0 +1,82 @@
+<div id="main-wrapper">
+    <div id="brand" class="semibold">Bem-vindo à TrainSys</div>
+    <form (ngSubmit)="submit()" id="login-form" [formGroup]="form">
+        <h2 class="text-center">Cadastro</h2>
+        
+        
+        @if (globalErrorMessage) {
+            <mat-error id="global-error" class="text-center">{{globalErrorMessage}}</mat-error>
+        }
+
+
+        <div class="line-inputs-wrapper">
+            <mat-form-field>
+                <mat-label>Nome Completo</mat-label>
+                <input matInput formControlName="name" required>
+                <mat-icon matSuffix>person</mat-icon>
+                @if (form.get('name')?.invalid && form.get('name')?.touched) {
+                    <mat-error>{{errorMessage('name', 'Nome Completo')}}</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        
+
+        <div class="line-inputs-wrapper">
+            <mat-form-field>
+                <mat-label>E-mail</mat-label>
+                <input matInput type="email" placeholder="exemplo@dominio.com" formControlName="email" required>
+                <mat-icon matSuffix>email</mat-icon>
+                @if (form.get('email')?.invalid && form.get('email')?.touched) {
+                    <mat-error>{{errorMessage('email', 'E-mail')}}</mat-error>
+                }
+            </mat-form-field>
+            <mat-form-field>
+                <mat-label>Tipo de Plano</mat-label>
+                <mat-select formControlName="plan">
+                    <mat-option value="bronze">Bronze</mat-option>
+                    <mat-option value="silver">Silver</mat-option>
+                    <mat-option value="gold">Gold</mat-option>
+                </mat-select>
+                <mat-icon matSuffix class="mat-18">workspace_premium</mat-icon>
+            </mat-form-field>
+        </div>
+
+
+        <div class="line-inputs-wrapper">
+            <mat-form-field>
+                <mat-label>Senha</mat-label>
+                <input matInput [type]="hide ? 'password' : 'text'" (input)="passwordChange()" formControlName="password" required>
+                <button type="button" mat-icon-button matSuffix (click)="hideSwitch()"
+                [attr.aria-label]="'Hide password'">
+                    <mat-icon>{{hide ? 'visibility' : 'visibility_off'}}</mat-icon>
+                </button>
+                <mat-error>{{errorMessage('password', 'Senha')}}</mat-error>
+            </mat-form-field>
+
+            
+            <mat-form-field>
+                <mat-label>Confirmar Senha</mat-label>
+                <input matInput type="password" formControlName="confirmPassword" required>
+                <mat-icon matSuffix>password</mat-icon>
+                @if (form.get('confirmPassword')?.invalid && form.get('confirmPassword')?.touched) {
+                    <mat-error>Senhas não coincidem</mat-error>
+                }
+            </mat-form-field>
+        </div>
+        
+
+        
+
+        <button mat-raised-button color="primary" type="submit" [disabled]="form.invalid || serviceLoading">
+            @if (serviceLoading) {
+                Carregando...
+            } @else {
+                Cadastrar-se
+            }
+        </button>
+
+        <div id="login">
+            <span>Já possui uma conta? </span><a routerLink="/login">Fazer login</a>
+        </div>
+    </form>
+</div>

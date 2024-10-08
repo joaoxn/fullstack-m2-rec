@@ -1,1 +1,58 @@
 /* You can add global styles to this file, and also import other style files */
+
+html, body {
+    height: 100%;
+}
+
+body {
+    margin: 0;
+    font-family: Roboto, "Helvetica Neue", sans-serif;
+}
+
+.text-center {
+    text-align: center !important;
+}
+
+.dir-col {
+    display: flex;
+    flex-direction: column;
+}
+
+.dir-row {
+    display: flex;
+    flex-direction: row;
+}
+
+.separate {
+    display: flex;
+    justify-content: space-between;
+}
+
+.bold {
+    font-weight: bold;
+}
+
+.semibold {
+    font-weight: 500;
+}
+
+.mrg-top-1 {
+    margin-top: 1rem !important;
+}
+
+.mrg-top-o5 {
+    margin-top: .5rem !important;
+}
+
+.line-inputs-wrapper {
+    @extend .dir-row;
+    @extend .separate;
+
+    flex-wrap: wrap;
+    column-gap: 1rem;
+    row-gap: 0;
+    
+    &>mat-form-field {
+        flex: 1 0 200px;
+    }
+}

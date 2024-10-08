@@ -1,0 +1,211 @@
+{
+  "users": [
+    {
+      "id": "0",
+      "name": "Admin User",
+      "email": "admin@user.com",
+      "password": "Admin123#",
+      "plan": "gold",
+      "studentsId": [
+        "0",
+        "1"
+      ],
+      "exercises": [
+        "pushup"
+      ],
+      "trainingsId": [
+        "0"
+      ]
+    },
+    {
+      "id": "1",
+      "name": "José Alexandre da Silva",
+      "email": "jose.fit@fitness.com",
+      "password": "Fit_ness42",
+      "plan": "bronze",
+      "studentsId": [
+        "2",
+        "8c28"
+      ],
+      "exercises": [
+        "squats",
+        "burpees"
+      ],
+      "trainingsId": [
+        "1",
+        "2",
+        "3",
+        "4",
+        "5dd0",
+        "fc59"
+      ]
+    }
+  ],
+  "students": [
+    {
+      "id": "0",
+      "name": "Juan Cardoso",
+      "email": "juan.lopez@example.com",
+      "contact": "47997833550",
+      "birthDate": "1990-05-15",
+      "address": {
+        "cep": "11234-567",
+        "street": "Rua dos Andradas",
+        "number": 123,
+        "district": "Bairro da Lua",
+        "city": "Cidade do Mundo",
+        "state": "SP",
+        "complement": "Apartamento 101"
+      },
+      "trainings": [
+        {
+          "trainingId": "0",
+          "weekDay": 4,
+          "concluded": false
+        }
+      ]
+    },
+    {
+      "id": "1",
+      "name": "Pedro Moraes",
+      "email": "pedro.santos@example.com",
+      "contact": "47999988776",
+      "birthDate": "1985-03-20",
+      "address": {
+        "cep": "12345-678",
+        "street": "Rua das Rosas",
+        "number": 456,
+        "district": "Bairro do Céu",
+        "city": "Cidade da Esperança",
+        "state": "SP",
+        "complement": "Casa 201"
+      },
+      "trainings": []
+    },
+    {
+      "id": "2",
+      "name": "Maria Cecília",
+      "email": "maria.silva@example.com",
+      "contact": "47998877665",
+      "birthDate": "1995-07-10",
+      "address": {
+        "cep": "12345-678",
+        "street": "Rua das Flores",
+        "number": 789,
+        "district": "Bairro do Vale",
+        "city": "Cidade da Lua",
+        "state": "SP",
+        "complement": "Apartamento 202"
+      },
+      "trainings": [
+        {
+          "trainingId": "2",
+          "weekDay": 1,
+          "concluded": false
+        },
+        {
+          "trainingId": "3",
+          "weekDay": 0,
+          "concluded": true
+        },
+        {
+          "trainingId": "4",
+          "weekDay": 0,
+          "concluded": false
+        },
+        {
+          "trainingId": "5dd0",
+          "weekDay": 6,
+          "concluded": false
+        }
+      ]
+    },
+    {
+      "id": "8c28",
+      "name": "Andréia Rodrigues",
+      "email": "",
+      "contact": "47997833550",
+      "birthDate": "",
+      "address": {
+        "cep": "88134511",
+        "street": "Rua Emanuel Francisco Darella",
+        "number": 691,
+        "district": "Barra do Aririú",
+        "city": "Palhoça",
+        "state": "Santa Catarina",
+        "complement": "Ap. 3"
+      },
+      "trainings": [
+        {
+          "trainingId": "fc59",
+          "weekDay": 4,
+          "concluded": false
+        }
+      ]
+    }
+  ],
+  "trainings": [
+    {
+      "id": "0",
+      "exercise": "pushup",
+      "repetitions": 10,
+      "weight": 0,
+      "pauseTime": 30,
+      "observations": ""
+    },
+    {
+      "exercise": "burpees",
+      "repetitions": 10000,
+      "weight": 10000,
+      "pauseTime": 10000,
+      "observations": "Treino Teste: Não Executar",
+      "weekDay": 5,
+      "concluded": false,
+      "id": "1"
+    },
+    {
+      "id": "2",
+      "exercise": "burpees",
+      "repetitions": 8,
+      "weight": 5,
+      "pauseTime": 30,
+      "observations": ""
+    },
+    {
+      "id": "3",
+      "exercise": "squats",
+      "repetitions": 20,
+      "weight": 15,
+      "pauseTime": 20,
+      "observations": ""
+    },
+    {
+      "id": "4",
+      "exercise": "burpees",
+      "repetitions": 20,
+      "weight": 0,
+      "pauseTime": 10,
+      "observations": "Parar se ficar cansado(a)"
+    },
+    {
+      "id": "5dd0",
+      "exercise": "burpees",
+      "repetitions": 81273812346,
+      "weight": 23796324,
+      "pauseTime": 52685326,
+      "observations": "Teste",
+      "weekDay": 6,
+      "concluded": false
+    },
+    {
+      "id": "fc59",
+      "exercise": "squats",
+      "repetitions": 1231746,
+      "weight": 1948623,
+      "pauseTime": 4932764931,
+      "observations": "Testing",
+      "weekDay": 4,
+      "concluded": false
+    }
+  ]
+}

@@ -1,0 +1,46 @@
+mat-toolbar {
+    display: flex;
+    justify-content: space-between;
+    flex-wrap: wrap;
+    height: auto;
+}
+
+header>* {
+    background: linear-gradient(-90deg, #faf9fd, rgb(159, 194, 255));
+    border-bottom: 3px solid rgb(159, 194, 255);
+
+    & * {
+        flex: initial;
+        text-align: center;
+        margin: 0.5rem;
+    }
+
+    &> :first-child {
+        flex: auto;
+    }
+
+    &>a {
+        color: #005cbb;
+        text-decoration: none;
+
+        &:hover {
+            color: #003366;
+        }
+    }
+}
+
+footer>* {
+    background-color: #f4f4f4;
+
+    &>* {
+        flex: 1;
+        margin: 0.5rem;
+        text-align: center;
+        font-size: small;
+    }
+}
+
+#logout {
+    color: white;
+    background-color: rgb(204, 23, 71);
+}

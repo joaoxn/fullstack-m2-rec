@@ -1,0 +1,40 @@
+#main-wrapper {
+    width: 100vw;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background-image: url('/assets/login-bg.jpg');
+    background-size: cover;
+    position: relative;
+}
+
+#brand {
+    padding: 0.5rem 1rem;
+    border-radius: 0 0 1rem 1rem;
+    background-color: rgb(204, 23, 71);
+    color: white;
+    box-shadow: 0 5px 15px -3px rgba(0,0,0,0.75);
+
+    position: absolute;
+    top: 0;
+}
+
+
+#login-form {
+    min-width: 50vw;
+    background: linear-gradient(rgb(219, 246, 255), rgb(163, 199, 230) 70%, rgb(137, 174, 255));
+    border: 0.25rem solid rgb(137, 174, 255);
+    border-radius: 1rem;
+    box-shadow: 0 5px 20px -5px rgba(0, 0, 0);
+
+    display: flex;
+    flex-direction: column;
+    padding: 1rem;
+}
+
+#register {
+    margin-top: 1.5rem;
+    text-align: center;
+}
