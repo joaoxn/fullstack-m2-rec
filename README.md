@@ -57,3 +57,9 @@ O projeto foi pensado para ser facilmente expansível, e algumas melhorias futur
 - **Alertas interativos**: Implementar feedbacks visuais com **dialogs** ou **snackbars** para as ações do usuário.
 
 - **Cadastro otimizado de treinos**: Permitir a criação de treinos reutilizáveis entre alunos e dias da semana, evitando a repetição de treinos idênticos.
+
+## Demonstração
+
+Assista a uma **demonstração do TrainSys** no vídeo abaixo:
+
+[Ver Vídeo](https://drive.google.com/file/d/1bLMmaC-h0VYDK9EuWHhbaczB3yRnu6Ib/view?usp=sharing)
