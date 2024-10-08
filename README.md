@@ -1,27 +1,57 @@
 # TrainSys
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 18.0.5.
+**TrainSys** é uma ferramenta desenvolvida para **treinadores de academia**, com o objetivo de facilitar o **gerenciamento de alunos**, **treinos** e **exercícios**. Com o TrainSys, treinadores podem facilmente criar e organizar a estrutura e agenda de treinos para suas academias e alunos.
 
-## Development server
+## Tecnologias Utilizadas
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
+Este projeto foi construído utilizando:
 
-## Code scaffolding
+- **Angular** como framework principal.
+- **Angular Material** para componentes de UI.
+- **NgMask** para manipulação de máscaras de input.
+- **HTML**, **TypeScript** e **SCSS** para desenvolvimento front-end.
+- **JSON Server** como simulação de um back-end, utilizando um arquivo `.json`.
 
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
+## Como Executar o Projeto
 
-## Build
+Para rodar o TrainSys localmente, siga os passos abaixo:
 
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory.
+1. **Clone o repositório e abra o terminal na raiz do projeto Angular.**
+   
+2. **Inicie o servidor local:**
+   ```bash
+   ng serve
+   ```
+   > **IMPORTANTE**: Certifique-se de ter o Angular CLI instalado. Caso não tenha, instale com o seguinte comando:
+   ```bash
+   npm install -g @angular/cli
+   ```
 
-## Running unit tests
+3. **Inicie o servidor de dados JSON:**
+   ```bash
+   json-server ./src/db/db.json
+   ```
+   > **IMPORTANTE**: O JSON Server deve estar instalado. Para instalar, use o comando:
+   ```bash
+   npm install json-server
+   ```
 
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
+4. **Acesse o site** em `http://localhost:4200` e explore as funcionalidades!
 
-## Running end-to-end tests
+## Funcionalidades
 
-Run `ng e2e` to execute the end-to-end tests via a platform of your choice. To use this command, you need to first add a package that implements end-to-end testing capabilities.
+- **Página de Login e Cadastro**: Permite que usuários se cadastrem e façam login para acessar a plataforma.
 
-## Further help
+- **Gerenciamento de Treinos**: Treinadores podem montar e ajustar treinos específicos para cada aluno.
 
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI Overview and Command Reference](https://angular.dev/tools/cli) page.
+- **Gerenciamento de Exercícios**: Treinadores podem adicioar ou remover exercícios existentes, para adicionar futuramente aos seus treinos. 
+
+- **Gerenciamento de Alunos**: Treinadores podem criar, editar, visualizar ou remover alunos, com seus respectivos dados, e que poderá ter treinos montados na página de gerenciamento de treino.
+
+## Possíveis Melhorias
+
+O projeto foi pensado para ser facilmente expansível, e algumas melhorias futuras incluem:
+
+- **Estado de conclusão dos treinos**: Adicionar a opção de marcar treinos como concluídos ou não.
+- **Alertas interativos**: Implementar feedbacks visuais com **dialogs** ou **snackbars** para as ações do usuário.
+- **Cadastro otimizado de treinos**: Permitir a criação de treinos reutilizáveis entre alunos e dias da semana, evitando a repetição de treinos idênticos.
