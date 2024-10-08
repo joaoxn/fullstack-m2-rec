@@ -53,5 +53,7 @@ Para rodar o TrainSys localmente, siga os passos abaixo:
 O projeto foi pensado para ser facilmente expansível, e algumas melhorias futuras incluem:
 
 - **Estado de conclusão dos treinos**: Adicionar a opção de marcar treinos como concluídos ou não.
+
 - **Alertas interativos**: Implementar feedbacks visuais com **dialogs** ou **snackbars** para as ações do usuário.
+
 - **Cadastro otimizado de treinos**: Permitir a criação de treinos reutilizáveis entre alunos e dias da semana, evitando a repetição de treinos idênticos.
